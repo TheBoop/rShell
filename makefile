@@ -1,7 +1,8 @@
+CPPFLAGS = -std=c++11
 CFLAGS = -ansi -pedantic -Wall -Werror
 
 all: rshell
 
-rshell: rshell.cpp ; g++ $(CFLAGS) src/rshell.cpp -o bin/rshell
+rshell: ; mkdir bin ; g++ $(CPPFLAGS) $(CFLAGS) src/rshell.cpp -o bin/rshell.cpp
 
-clear ; rm -rf bin/
+clear: ; rm -rf bin/
