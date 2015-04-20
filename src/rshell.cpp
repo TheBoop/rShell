@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <cstring>
+#include <algorithm>
 #include <boost/tokenizer.hpp>
 
 using namespace std;
@@ -13,43 +14,57 @@ using namespace boost;
 typedef tokenizer<char_separator<char> > mytok;
 
 //Takes in commands and returns true or false
-bool checkCommand(const char* command ,char* argList[]){
+bool checkCommand(vector<string> argList){
+    vector<char*> arguments;
+    
+    //Changing string into char*
+    for(unsigned int i = 0; i< argList.size(); i++){
+        arguments.push_back(const_cast<char*>(argList[i].c_str()));
+        //cout << arguments[i] << " ";
+    }
+    //cout << "|| argList: " << argList[0] << endl;
     //cout << "Check Command" << endl;
-    int status, exStat = -1;
-    int pid = fork();//forked
-    if(pid <= -1){
+    int status;
+    int pid = fork();//forked const_cast<char*>(argList[0].c_str())
+    if(pid < 0){
         perror("Forking Error");
         exit(1);
     }else if (pid == 0){ //Children
-        int exStat = execvp(command ,argList);
-        if(exStat == -1){
+        if(execvp(arguments[0] ,&arguments[0])<0){
             perror("Executable or arg Error");
             exit(1);
+            return false;
+        }else{
+            return true;
         }
     }else if (pid > 0) {//Parent
         if(waitpid(pid, &status, 0) == -1)
             perror("Wait Error");
+        return true;
     }
-    return exStat;
+    //cout << "ExStat: " << exStat << endl;
+    return false;
 }
 
-bool shouldRun(const char* command, char* argList[], int seperator, bool previous){
+bool shouldRun(vector<string> argList, int seperator, bool &previous){
     //seperator 0 = none, 1 = comment, 2 = ||, 3 = &&, 4 = ;
-    //cout << "Should Run Check" << endl;
-    if(seperator == 0 || seperator == 1){
+    //cout << "Previous: "<< previous  << endl;
+    if(argList.empty()){
+        return false;
+    }else if(seperator == 0 || seperator == 1){
         //cout << "Case 1" << endl; 
         return false; 
     }else if(seperator == 2 && !previous){
         //cout << "Case 2" << endl; 
-        checkCommand(command, argList);
+        previous = checkCommand(argList);
         return true;
     }else if(seperator == 3 && previous){
         //cout << "Case 3" << endl; 
-        checkCommand(command, argList);
+        previous = checkCommand(argList);
         return true;
     }else if(seperator == 4){
         //cout << "Case 4" << endl; 
-        checkCommand(command, argList);
+        previous = checkCommand(argList);
         return true;
     }
     //cout << "Case 1" << endl; 
@@ -58,19 +73,31 @@ bool shouldRun(const char* command, char* argList[], int seperator, bool previou
 
 int main(int argc,char **argv){
     //Login
-
-
+    char host[200];//allocate memeory for host
+    char* user;
+    int hStat = gethostname(host, 200);
+    if(hStat !=0){
+        perror("Cannot get Host Name");
+    }
+    if(getlogin() != NULL){
+        user = getlogin();
+    }else{
+        perror("Cannot get User Name");
+    }
 
     //Declarations
     bool hasAnd = false, hasOr = false, previous=false;
     string input;
-    int argSize = 0, seperator = 0;
+    int seperator = 0;
     //Take in list of parsed commands
-    char* args[5001];//arguments, 1 more for good luck
-    
+    //char* args[5001];//arguments, 1 more for good luck
+    vector<string> args;
+
     //While loop that repeats $ and cin command
     while(true){
-        cout << "$ ";
+        cout << user << "@" << host << " $ ";
+        cout.flush();//flush just to be safe
+
         getline(cin,input);//get input
         //cout << input << endl;
 //================Tokenize the input into multiple parts==============
@@ -80,26 +107,30 @@ int main(int argc,char **argv){
         bool comment = false;
 
         for(mytok::iterator it = mytok.begin(); it != mytok.end(); ++it){
-            cout << "token: " << *it << "arg: " << argSize << endl; 
+            //cout << "token: " << *it  << endl; 
             //Check for connectors
-            if(*it == "#"||comment){
-                cout << "checked #" << endl;
+            if(*it == "exit"){
+                exit(0);
+            }if(*it == "#"||comment){
+                //cout << "checked #" << endl;
                 comment = true;
                 seperator = 1;
             }else if(*it == "&"){
                 if(hasAnd){
-                    cout << "checked &" << endl;
+                    //cout << "checked &&" << endl;
+                    seperator = 3;
                     hasAnd = false;
                 }
                 hasAnd = true;
             }else if(*it == "|"){
                 if(hasOr){
-                    cout << "|" << endl;
+                    //cout << "checked ||" << endl;
+                    seperator = 2;
                     hasOr = false;
                 }
                 hasOr = true;
             }else if(*it == ";"){
-                cout << ";" << endl;
+                //cout << ";" << endl;
                 seperator = 4;
             }
             else{
@@ -107,32 +138,26 @@ int main(int argc,char **argv){
                 //cout << "STORE" << endl;
                 hasOr=false;
                 hasAnd=false;
-                if(!comment){
-                    char* temp = const_cast<char*>(it->c_str());
-                    args[argSize] = temp; 
-                    argSize++;
-                }
+                args.push_back(*it);
+                seperator = 0;
             }
-            cout << "The Elements: ";
+            //cout << "The Elements: ";
             //Print Check
-            for(int i = 0; i < argSize; i++)
-                cout << args[i]<< " ";
-            cout << "Args: "<<argSize << endl;
+            //for(unsigned int i = 0; i < args.size(); i++)
+            //    cout << args[i]<< " ";
+            //cout << " Args: "<<args.size()<< endl;
 
             //Clears arg if it runs
-            if(shouldRun(args[0],args,seperator,previous)){
-                //cout << "CLEAR" << endl;
-                for(int i =0; i<argSize;i++)
-                    args[i] = '\0';
-                seperator = 0;
-                argSize = 0;
+            if(shouldRun(args,seperator,previous)){
+            //cout << "CLEAR1" << endl;
+                args.clear();
             }
 //==============RUN THE COMMANDS======================
         }
-        if(shouldRun(args[0],args,4,previous)){
-            for(int i =0; i<argSize;i++)
-                    args[i] = '\0';
-            argSize = 0;
+        if(shouldRun(args,4,previous)){
+            //cout << "CLEAR2" << endl;
+            args.clear();
+            previous = false;
         }
 
     }

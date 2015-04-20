@@ -3,6 +3,6 @@ CFLAGS = -ansi -pedantic -Wall -Werror
 
 all: rshell
 
-rshell: ; mkdir bin ; g++ $(CPPFLAGS) $(CFLAGS) src/rshell.cpp -o bin/rshell.cpp
+rshell: ; mkdir bin ; g++ $(CPPFLAGS) $(CFLAGS) src/rshell.cpp -o bin/a.out
 
-clear: ; rm -rf bin/
+clean: ; rm -rf bin/
