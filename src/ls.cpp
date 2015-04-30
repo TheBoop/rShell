@@ -8,6 +8,7 @@
 #include <dirent.h>
 #include <cstring>
 #include <algorithm>
+#include <unistd.h>
 
 using namespace std;
 
@@ -18,7 +19,6 @@ bool strSort(string a, string b){
         b[i] = tolower(b[i]);
     return a<b;
 }
-
 
 //Run the function given
 void print_dir(char const *name, vector<bool> flags){
@@ -35,7 +35,7 @@ void print_dir(char const *name, vector<bool> flags){
     do{
         errno = 0;
         if((dp = readdir(dirp)) != NULL){
-            if(flags[0])
+            if(flags[0])//============CheckForFlag(-a)==========
                 fl.push_back(dp-> d_name);
             else{
                 if(dp->d_name[0] != '.')
@@ -43,14 +43,45 @@ void print_dir(char const *name, vector<bool> flags){
             }
         }
     }while(dp != NULL);
+    if(errno != 0)//Syscall Error Check for readdir
+        perror("Error reading directory");
 
     sort(fl.begin(),fl.end(),strSort);
-    for(unsigned int i = 0; i<fl.size();++i)
-        cout << fl[i] << " ";
+    //===================ARRAY SORTED====================
+    //===================CheckForFlag(-l)================
+    if(flags[1]){
+        //Loop through each file to find it's stats
+        for(unsigned int i = 0; i<fl.size();++i){
+            //Declare variable for storing status
+            struct stat s;
+            string perm = "----------";
+            
+            //Setting stats
+            if(stat(fl[i].c_str(),&s) != 0){
+                perror("Error Stats Call");
+                exit(1);
+            }
+            
+            if(S_ISDIR(s.st_mode)) perm[0] = 'd';
+            else if(S_ISCHR(s.st_mode)) perm[0] = 'c';
+            else if(S_ISBLK(s.st_mode)) perm[0] = 'b';
+            else if(S_ISFIFO(s.st_mode)) perm[0] = 'p';
+            else if(S_ISLNK(s.st_mode)) perm[0] = 'l';
+            else if(S_ISSOCK(s.st_mode)) perm[0] = 's';
+            
+            if(S_IRUSR & s.st_mode) perm[1]='r';
+            if(S_IWUSR & s.st_mode) perm[2]='w';
+            if(S_IXUSR & s.st_mode) perm[3]='x';
+            if(S_IRGRP & s.st_mode) perm[4]='r';
+            if(S_IWGRP & s.st_mode) perm[5]='w';
+            if(S_IXGRP & s.st_mode) perm[6]='x';
+            if(S_IROTH & s.st_mode) perm[7]='r';
+            if(S_IWOTH & s.st_mode) perm[8]='w';
+            if(S_IXOTH & s.st_mode) perm[8]='x';
 
-    if(errno != 0)
-        perror("Error reading directory");
-        
+        }
+    }else for(unsigned int i = 0; i<fl.size();++i)
+        cout << fl[i] << " ";            
 }
 
 int main(int argc, char* argv[]){
@@ -93,11 +124,20 @@ int main(int argc, char* argv[]){
     //if there is no path specified or if there is multiple paths
     if(paths.empty())
         paths.push_back(".");
-    else if(paths.size() > 1)
+    else if(paths.size() > 1){
         flags[3] = true;
+        sort(paths.begin(),paths.end(),strSort);//Sorted the paths
+    }
 
-    for(unsigned int i = 0; i<paths.size(); i++){
-        print_dir(paths[0].c_str(),flags);
+    if(flags[3]){
+        for(unsigned int i = 0; i<paths.size(); i++){
+            cout << paths[i] << ":"<<endl;
+            print_dir(paths[i].c_str(),flags);
+            if(i != paths.size()-1)
+                cout << "\n" << endl;
+        }
+    }else for(unsigned int i = 0; i<paths.size(); i++){
+        print_dir(paths[i].c_str(),flags);
     }
     cout << "\n";
     cout.flush();
