@@ -7,39 +7,52 @@
 #include <stdio.h>
 #include <dirent.h>
 #include <cstring>
+#include <algorithm>
 
 using namespace std;
 
-struct fileInfo{
-    //File Name
-    char *name;
-    
-};
+bool strSort(string a, string b){
+    for(unsigned int i = 0; i<a.size(); ++i)
+        a[i] = tolower(a[i]);
+    for(unsigned int i = 0; i<b.size(); ++i)
+        b[i] = tolower(b[i]);
+    return a<b;
+}
+
 
 //Run the function given
 void print_dir(char const *name, vector<bool> flags){
     DIR *dirp;
     struct dirent *dp;
-
+    
     if((dirp = opendir(name)) == NULL) {
         perror("CANNOT OPEN PATH");
             exit(1);
         }
     
-    
+    //Have a string store all file to be sorted
+    vector<string> fl;
     do{
         errno = 0;
         if((dp = readdir(dirp)) != NULL){
-            cout << dp-> d_name << " ";
+            if(flags[0])
+                fl.push_back(dp-> d_name);
+            else{
+                if(dp->d_name[0] != '.')
+                    fl.push_back(dp-> d_name);
+            }
         }
     }while(dp != NULL);
 
-    cout << "\n" << endl;
+    sort(fl.begin(),fl.end(),strSort);
+    for(unsigned int i = 0; i<fl.size();++i)
+        cout << fl[i] << " ";
 
     if(errno != 0)
         perror("Error reading directory");
         
 }
+
 int main(int argc, char* argv[]){
     //vector declaration
     vector<bool> flags(4,false);//0 is -a, 1 is -l, 2 is -R
@@ -86,5 +99,7 @@ int main(int argc, char* argv[]){
     for(unsigned int i = 0; i<paths.size(); i++){
         print_dir(paths[0].c_str(),flags);
     }
+    cout << "\n";
+    cout.flush();
     return 0;
 }
