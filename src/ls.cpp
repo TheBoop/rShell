@@ -9,9 +9,12 @@
 #include <cstring>
 #include <algorithm>
 #include <unistd.h>
+#include <pwd.h>
+#include <grp.h>
 
 using namespace std;
 
+//====================Sorting Array of String==================
 bool strSort(string a, string b){
     for(unsigned int i = 0; i<a.size(); ++i)
         a[i] = tolower(a[i]);
@@ -20,12 +23,12 @@ bool strSort(string a, string b){
     return a<b;
 }
 
-//Run the function given
-void print_dir(char const *name, vector<bool> flags){
+//====================Print the function given=================
+void print_dir(string name, vector<bool> flags){
     DIR *dirp;
     struct dirent *dp;
     
-    if((dirp = opendir(name)) == NULL) {
+    if((dirp = opendir(name.c_str())) == NULL) {
         perror("CANNOT OPEN PATH");
             exit(1);
         }
@@ -45,45 +48,80 @@ void print_dir(char const *name, vector<bool> flags){
     }while(dp != NULL);
     if(errno != 0)//Syscall Error Check for readdir
         perror("Error reading directory");
+    
+    for(unsigned int i =0 ; i<fl.size(); i++)
 
     sort(fl.begin(),fl.end(),strSort);
     //===================ARRAY SORTED====================
     //===================CheckForFlag(-l)================
     if(flags[1]){
+         //Declare variable for storing status
+        struct stat s;
+         
         //Loop through each file to find it's stats
         for(unsigned int i = 0; i<fl.size();++i){
-            //Declare variable for storing status
-            struct stat s;
-            string perm = "----------";
-            
-            //Setting stats
-            if(stat(fl[i].c_str(),&s) != 0){
+        //Setting stats fl[i].c_str()
+            string statS = name + "/" + fl[i];
+            if(stat(statS.c_str(),&s) < 0){
                 perror("Error Stats Call");
                 exit(1);
             }
+
+            if(S_ISDIR(s.st_mode)) cout << 'd';
+            else if(S_ISCHR(s.st_mode)) cout << 'c';
+            else if(S_ISBLK(s.st_mode)) cout << 'b';
+            else if(S_ISFIFO(s.st_mode)) cout << 'p';
+            else if(S_ISLNK(s.st_mode)) cout << 'l';
+            else if(S_ISSOCK(s.st_mode)) cout << 's';
+            else cout << "-";
             
-            if(S_ISDIR(s.st_mode)) perm[0] = 'd';
-            else if(S_ISCHR(s.st_mode)) perm[0] = 'c';
-            else if(S_ISBLK(s.st_mode)) perm[0] = 'b';
-            else if(S_ISFIFO(s.st_mode)) perm[0] = 'p';
-            else if(S_ISLNK(s.st_mode)) perm[0] = 'l';
-            else if(S_ISSOCK(s.st_mode)) perm[0] = 's';
+            cout << ((S_IRUSR & s.st_mode)?'r':'-');
+            cout << ((S_IWUSR & s.st_mode)?'w':'-');
+            cout << ((S_IXUSR & s.st_mode)?'x':'-');
+            cout << ((S_IRGRP & s.st_mode)?'r':'-');
+            cout << ((S_IWGRP & s.st_mode)?'w':'-');
+            cout << ((S_IXGRP & s.st_mode)?'x':'-');
+            cout << ((S_IROTH & s.st_mode)?'r':'-');
+            cout << ((S_IWOTH & s.st_mode)?'w':'-');
+            cout << ((S_IXOTH & s.st_mode)?'x':'-');
             
-            if(S_IRUSR & s.st_mode) perm[1]='r';
-            if(S_IWUSR & s.st_mode) perm[2]='w';
-            if(S_IXUSR & s.st_mode) perm[3]='x';
-            if(S_IRGRP & s.st_mode) perm[4]='r';
-            if(S_IWGRP & s.st_mode) perm[5]='w';
-            if(S_IXGRP & s.st_mode) perm[6]='x';
-            if(S_IROTH & s.st_mode) perm[7]='r';
-            if(S_IWOTH & s.st_mode) perm[8]='w';
-            if(S_IXOTH & s.st_mode) perm[8]='x';
+            cout << " ";
+    //-------------HARD LINKS----------
+            cout << s.st_nlink << " ";
+    //------------USER ID--------------
+            struct passwd userID = *getpwuid(s.st_uid);
+            if(&userID == NULL){
+                perror("getpwuid error");
+                exit(1);
+            }
+            cout << userID.pw_name << " ";
+    //--------------GROUP ID--------------
+            struct group groupID = *getgrgid(s.st_gid);
+            if(&groupID == NULL){
+                perror("getgrid error");
+                exit(1);
+            }
+            cout << groupID.gr_name << " ";
+    //------------BIT SIZE---------------
+            cout << std::right <<s.st_size << " ";
+    //------------TIME------------------
+            struct tm *time = localtime(&s.st_ctime);
+            printf("%s",asctime(time));
+            
+    //---------------FILENAME-----------
+            cout << fl[i].c_str() << endl;
+            
 
         }
+        
+//-------------------Not -l flag--------------
     }else for(unsigned int i = 0; i<fl.size();++i)
-        cout << fl[i] << " ";            
+        cout << fl[i] << " "; 
+
 }
 
+
+//===============MAIN FUNCTION BLOCK=================
 int main(int argc, char* argv[]){
     //vector declaration
     vector<bool> flags(4,false);//0 is -a, 1 is -l, 2 is -R
@@ -129,8 +167,9 @@ int main(int argc, char* argv[]){
         sort(paths.begin(),paths.end(),strSort);//Sorted the paths
     }
 
+//==================Passes Each directory into print_dir========
     if(flags[3]){
-        for(unsigned int i = 0; i<paths.size(); i++){
+        for(unsigned int i = 0; i<paths.size(); ++i){
             cout << paths[i] << ":"<<endl;
             print_dir(paths[i].c_str(),flags);
             if(i != paths.size()-1)
