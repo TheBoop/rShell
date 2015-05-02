@@ -31,9 +31,11 @@ also the SDL libraries and a c++ compiler;
 
 ##Bugs and Limitations
 ls
+* Each line of ls holds 6 file names
 * After given invalid path or parameters, program will stop
 * When show files or directories with large names, file will be out of alignment
 * The total count for -l parameter is shown at the bottom of the list instead of the top
+* When passing in multiple paths display file is not seperated
 
 rShell
 * Throws errors when not given a proper executable

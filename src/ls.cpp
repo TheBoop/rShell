@@ -25,6 +25,23 @@ bool strSort(string a, string b){
     return a<b;
 }
 
+//=======================COLORS=================================
+string apply_color(mode_t s, string name){
+    string color = "39";
+    string background = "49";
+
+    if(S_ISDIR(s)) color = "34";
+    else if(S_ISCHR(s)) color = "35";
+    else if(S_ISBLK(s)) color = "33";
+    else if(S_ISFIFO(s)) color = "36";
+    else if(S_ISLNK(s)) color = "31";
+    else if(S_ISSOCK(s)) color = "92";
+    else if(S_IXUSR & s) color = "32";
+
+    if(name[0]=='.') background = "100";
+    return ("\x1b["+ color+";" + background +  "m" + name + "\x1b[0m");
+}
+
 //====================Print the function given=================
 int print_dir(string name, vector<bool> flags){
     DIR *dirp;
@@ -122,16 +139,15 @@ int print_dir(string name, vector<bool> flags){
             cout <<  cutTime.substr(4,12);
             
     //---------------FILENAME-----------
-            cout <<" "<< fl[i].c_str() << endl;
+            cout << apply_color(s.st_mode,fl[i].c_str()) << endl;
     //------------BLOCK----------------
             totalBlocks += s.st_blocks;
-        }
-        else{//-------------------Not -l flag--------------
+        }else{//-------------------Not -l flag--------------
             if(line > 4){
-                cout << fl[i] << "\n";
+                cout << apply_color(s.st_mode,fl[i].c_str()) << "\n";
                 line = 0;
             }else{
-            cout <<setw(14)<< std::left<< fl[i];  
+            cout << setw(27)<< std::left << apply_color(s.st_mode,fl[i].c_str());  
                 line++;
             }
         }
