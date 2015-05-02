@@ -18,6 +18,11 @@ ls:
 	$(GCC) $(CPPFLAGS) $(CFLAGS) $(FILEPATHLS) \
 	-o $(OUTFILELS)
 
+lsd:
+	if [ ! -d bin ]; then mkdir bin; fi
+	$(GCC) -g $(CPPFLAGS) $(CFLAGS) $(FILEPATHLS) \
+	-o bin/lsd
+
 runls:
 	$(OUTFILELS) -R -l -a ./makefile
 
