@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
+#include <queue>
 
 using namespace std;
 
@@ -24,15 +25,20 @@ bool strSort(string a, string b){
 }
 
 //====================Print the function given=================
-void print_dir(string name, vector<bool> flags){
+int print_dir(string name, vector<bool> flags){
     DIR *dirp;
     struct dirent *dp;
-    
+    queue<string> recurs;
+    int totalBlocks = 0;
+
     if((dirp = opendir(name.c_str())) == NULL) {
         perror("CANNOT OPEN PATH");
-            exit(1);
+            return(-1);
         }
     
+    if(flags[3]||flags[2])
+        cout << name << ":" << endl;
+
     //Have a string store all file to be sorted
     vector<string> fl;
     do{
@@ -46,27 +52,32 @@ void print_dir(string name, vector<bool> flags){
             }
         }
     }while(dp != NULL);
-    if(errno != 0)//Syscall Error Check for readdir
+    if(errno != 0){//Syscall Error Check for readdir
         perror("Error reading directory");
+        return -1;
+    }
     
     for(unsigned int i =0 ; i<fl.size(); i++)
 
     sort(fl.begin(),fl.end(),strSort);
-    //===================ARRAY SORTED====================
-    //===================CheckForFlag(-l)================
-    if(flags[1]){
-         //Declare variable for storing status
+//========================ARRAY SORTED==========================
+//=======================CheckForFlag(-l)========================
+    for(unsigned int i = 0; i<fl.size();++i){
+        //Declare variable for storing status
         struct stat s;
-         
         //Loop through each file to find it's stats
-        for(unsigned int i = 0; i<fl.size();++i){
         //Setting stats fl[i].c_str()
-            string statS = name + "/" + fl[i];
-            if(stat(statS.c_str(),&s) < 0){
-                perror("Error Stats Call");
-                exit(1);
-            }
+        string statS = name + "/" + fl[i];
+        if(stat(statS.c_str(),&s) < 0){
+            perror("Error Stats Call");
+            return -1;
+        }
+        if(S_ISDIR(s.st_mode)&&fl[i]!="."&&fl[i]!=".."){
+            recurs.push(statS);
+            //cout << "recurs: " << recurs.top()<< endl;
+        }
 
+        if(flags[1]){
             if(S_ISDIR(s.st_mode)) cout << 'd';
             else if(S_ISCHR(s.st_mode)) cout << 'c';
             else if(S_ISBLK(s.st_mode)) cout << 'b';
@@ -92,32 +103,48 @@ void print_dir(string name, vector<bool> flags){
             struct passwd userID = *getpwuid(s.st_uid);
             if(&userID == NULL){
                 perror("getpwuid error");
-                exit(1);
+                return -1;
             }
             cout << userID.pw_name << " ";
     //--------------GROUP ID--------------
             struct group groupID = *getgrgid(s.st_gid);
             if(&groupID == NULL){
                 perror("getgrid error");
-                exit(1);
+                return -1;
             }
             cout << groupID.gr_name << " ";
     //------------BIT SIZE---------------
             cout << std::right <<s.st_size << " ";
     //------------TIME------------------
             struct tm *time = localtime(&s.st_ctime);
-            printf("%s",asctime(time));
+            string cutTime = asctime(time);
+            cout <<  cutTime.substr(4,12);
             
     //---------------FILENAME-----------
-            cout << fl[i].c_str() << endl;
-            
-
+            cout <<" "<< fl[i].c_str() << endl;
+    //------------BLOCK----------------
+            totalBlocks += s.st_blocks;
         }
-        
-//-------------------Not -l flag--------------
-    }else for(unsigned int i = 0; i<fl.size();++i)
-        cout << fl[i] << " "; 
-
+        else//-------------------Not -l flag--------------
+            cout << fl[i] << " ";  
+    }
+    if(flags[1]){
+        cout << "total " << totalBlocks/2;
+    } else{
+        cout.flush();
+    }
+     
+//====================CheckFlag(-R)=========================
+    if(flags[2]){
+        while(!recurs.empty()){
+            cout << "\n" << endl;
+            if(print_dir(recurs.front(),flags)<0){
+                return -1;
+            }
+            recurs.pop();
+        }
+    }
+    return 0;
 }
 
 
@@ -130,13 +157,13 @@ int main(int argc, char* argv[]){
     //For when no flag is passed in
     if(argc < 1){
         cout << ("Error too little arguments") << endl;
-        exit(1);
+        return -1;
     }else for(int i = 1; i < argc ; ++i){
         //Throws all the arguments into a vector string
         if(argv[i][0] == '-'){
             if(argv[i][1] == '\0'){
                 cout << "No flag input after - " << endl;
-                exit(1);
+                return -1;
             }else for(int j = 1; argv[i][j] != '\0'; ++j) {
                 if(argv[i][j]=='a')
                     flags[0] = true;
@@ -168,17 +195,18 @@ int main(int argc, char* argv[]){
     }
 
 //==================Passes Each directory into print_dir========
-    if(flags[3]){
-        for(unsigned int i = 0; i<paths.size(); ++i){
-            cout << paths[i] << ":"<<endl;
-            print_dir(paths[i].c_str(),flags);
-            if(i != paths.size()-1)
-                cout << "\n" << endl;
+    for(unsigned int i = 0; i<paths.size(); i++){
+        if(i == paths.size()-1 && i!=0 && !flags[2] && (flags[1]&&flags[3])){
+            cout << "\n";
+            cout.flush();
         }
-    }else for(unsigned int i = 0; i<paths.size(); i++){
-        print_dir(paths[i].c_str(),flags);
+        if(print_dir(paths[i].c_str(),flags)<0){
+            printf("print_dir failed");
+            return -1;
+        }
+        cout << "\n";
+        cout.flush();
     }
-    cout << "\n";
     cout.flush();
     return 0;
 }
