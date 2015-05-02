@@ -209,7 +209,7 @@ int main(int argc, char* argv[]){
             cout.flush();
         }
         if(print_dir(paths[i].c_str(),flags)<0){
-            printf("print_dir failed");
+            printf("print_dir failed\n");
             return -1;
         }
         cout << "\n";
