@@ -12,6 +12,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <queue>
+#include <iomanip>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ int print_dir(string name, vector<bool> flags){
     struct dirent *dp;
     queue<string> recurs;
     int totalBlocks = 0;
-
+    int line = 0;
     if((dirp = opendir(name.c_str())) == NULL) {
         perror("CANNOT OPEN PATH");
             return(-1);
@@ -96,23 +97,23 @@ int print_dir(string name, vector<bool> flags){
             cout << ((S_IWOTH & s.st_mode)?'w':'-');
             cout << ((S_IXOTH & s.st_mode)?'x':'-');
             
-            cout << " ";
+            cout << setw(2);
     //-------------HARD LINKS----------
-            cout << s.st_nlink << " ";
+            cout << s.st_nlink << setw(9);
     //------------USER ID--------------
             struct passwd userID = *getpwuid(s.st_uid);
             if(&userID == NULL){
                 perror("getpwuid error");
                 return -1;
             }
-            cout << userID.pw_name << " ";
+            cout << userID.pw_name << setw(9);
     //--------------GROUP ID--------------
             struct group groupID = *getgrgid(s.st_gid);
             if(&groupID == NULL){
                 perror("getgrid error");
                 return -1;
             }
-            cout << groupID.gr_name << " ";
+            cout << groupID.gr_name << setw(6);
     //------------BIT SIZE---------------
             cout << std::right <<s.st_size << " ";
     //------------TIME------------------
@@ -125,8 +126,15 @@ int print_dir(string name, vector<bool> flags){
     //------------BLOCK----------------
             totalBlocks += s.st_blocks;
         }
-        else//-------------------Not -l flag--------------
-            cout << fl[i] << " ";  
+        else{//-------------------Not -l flag--------------
+            if(line > 4){
+                cout << fl[i] << "\n";
+                line = 0;
+            }else{
+            cout <<setw(14)<< std::left<< fl[i];  
+                line++;
+            }
+        }
     }
     if(flags[1]){
         cout << "total " << totalBlocks/2;
