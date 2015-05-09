@@ -15,13 +15,6 @@ typedef tokenizer<char_separator<char> > mytok;
 
 //Takes in commands and returns true or false
 bool checkCommand(vector<string> argList){
-    vector<char*> arguments;
-    
-    //Changing string into char*
-    for(unsigned int i = 0; i< argList.size(); i++){
-        arguments.push_back(const_cast<char*>(argList[i].c_str()));
-        //cout << arguments[i] << " ";
-    }
     //cout << "|| argList: " << argList[0] << endl;
     //cout << "Check Command" << endl;
     int status;
@@ -30,7 +23,7 @@ bool checkCommand(vector<string> argList){
         perror("Forking Error");
         exit(1);
     }else if (pid == 0){ //Children
-        if(execvp(arguments[0] ,&arguments[0])<0){
+        if(execvp(argList[0].c_str() ,&argList[0].c_str())<0){
             perror("Executable or arg Error");
             exit(1);
             return false;
@@ -90,7 +83,6 @@ int main(int argc,char **argv){
     string input;
     int seperator = 0;
     //Take in list of parsed commands
-    //char* args[5001];//arguments, 1 more for good luck
     vector<string> args;
 
     //While loop that repeats $ and cin command
