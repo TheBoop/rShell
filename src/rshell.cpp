@@ -15,31 +15,32 @@ typedef tokenizer<char_separator<char> > mytok;
 
 //Takes in commands and returns true or false
 bool checkCommand(vector<string> argList){
-    vector<char*> arguments;
-    
-    //Changing string into char*
-    for(unsigned int i = 0; i< argList.size(); i++){
-        arguments.push_back(const_cast<char*>(argList[i].c_str()));
-        //cout << arguments[i] << " ";
+    vector<char *> arguments(argList.size() +1);
+
+    for(size_t i = 0; i < argList.size(); ++i){
+        arguments[i] = &argList[i][0];
     }
-    //cout << "|| argList: " << argList[0] << endl;
-    //cout << "Check Command" << endl;
+
     int status;
     int pid = fork();//forked const_cast<char*>(argList[0].c_str())
     if(pid < 0){
         perror("Forking Error");
         exit(1);
     }else if (pid == 0){ //Children
-        if(execvp(arguments[0] ,&arguments[0])<0){
+        if(execvp(arguments[0],arguments.data())<0){
             perror("Executable or arg Error");
-            exit(1);
             return false;
         }else{
+            cout << "true" << endl;
             return true;
         }
+        /*for(unsigned int i = 0; i<argList.size(); i++)
+            cout <<  arguments[i] << " ";
+        cout << endl;*/
     }else if (pid > 0) {//Parent
         if(waitpid(pid, &status, 0) == -1)
             perror("Wait Error");
+
         return true;
     }
     //cout << "ExStat: " << exStat << endl;
@@ -99,7 +100,6 @@ int main(int argc,char **argv){
         cout.flush();//flush just to be safe
 
         getline(cin,input);//get input
-        //cout << input << endl;
 //================Tokenize the input into multiple parts==============
         //separators
         char_separator<char> delim(" ","|&;#");
