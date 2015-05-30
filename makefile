@@ -1,6 +1,6 @@
 GCC = g++
 CPPFLAGS = -std=c++11
-CFLAGS = -ansi -pedantic -Wall -Werror
+CFLAGS = -ansi -pedantic -Wall -Werror -g
 FILEPATHRSHELL = ./src/rshell.cpp
 FILEPATHLS = ./src/ls.cpp
 OUTFILERSHELL = bin/rshell
@@ -22,6 +22,9 @@ lsd:
 	if [ ! -d bin ]; then mkdir bin; fi
 	$(GCC) -g $(CPPFLAGS) $(CFLAGS) $(FILEPATHLS) \
 	-o bin/lsd
+
+run:
+	bin/rshell
 
 runls:
 	$(OUTFILELS) -R -l -a ./makefile
