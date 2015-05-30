@@ -451,23 +451,25 @@ int main(int argc,char **argv){
         perror("Cannot get User Name");
     }*/
     char cwd[BUFSIZ];
+
+    struct sigaction newAction, oldAction;
+    newAction.sa_handler = sigHandler;
+    sigemptyset(&newAction.sa_mask);
+    newAction.sa_flags = 0;
+        
+    if(oldAction.sa_handler != SIG_IGN){
+        if(sigaction(SIGINT, &newAction, &oldAction )< 0){
+            perror("sigaction");
+        }
+    }
     
     //Declarations
     string input;
     vector<string> args;
+    bool comment = false;
 
     //While loop that repeats $ and cin command
     while(true){
-        struct sigaction newAction, oldAction;
-        newAction.sa_handler = sigHandler;
-        sigemptyset(&newAction.sa_mask);
-        newAction.sa_flags = 0;
-        
-        if(oldAction.sa_handler != SIG_IGN){
-            if(sigaction(SIGINT, &newAction, &oldAction )< 0){
-                perror("sigaction");
-            }
-        }
         
         //cout << user << "@" << host << " $ ";
         if(getcwd(cwd,BUFSIZ) == NULL){
@@ -486,17 +488,21 @@ int main(int argc,char **argv){
         cout.flush();//flush just to be safe
         
         cin.clear();
+        comment = false;
         getline(cin,input);//get input
 //================Tokenize the input into multiple parts==============
         //separators
-        char_separator<char> delim(" ",";");
+        char_separator<char> delim(" ",";#");
         tokenizer<char_separator<char> > mytok(input, delim);//seperat the input
 
         for(mytok::iterator it = mytok.begin(); it != mytok.end(); ++it){
             //cout << "token: " << *it  << endl; 
+            //cout << "token: " << *it  << endl; 
             if(*it == "exit"){
                 exit(0);
-            }if(*it != "#"){
+            }else if(*it == "#"){
+                comment = true;
+            }else if(!comment){
                 args.push_back(*it);
             }
         }
