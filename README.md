@@ -20,6 +20,14 @@ Also connectors such as:
 * ;
 and supports functions.
 
+## cd
+###Description
+Simple cd command
+* run ``cd`` to go to home directory
+* run ``cd -`` to go to previous directory
+* run ``cd <PATH>`` to go to the path directory
+^C works as interupt
+
 ## ls
 ###Description
 ls command for bash. Accepts parameters -l, -R & -a ONLY. Accepts any 
