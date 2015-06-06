@@ -24,30 +24,6 @@ void sigHandler(int sig){
     }
 }
 
-//Executes one argument and return the status of that run
-bool runArg(vector<string> argList){
-    vector<char *> arguments(argList.size() +1);
-    for(size_t i = 0; i < argList.size(); ++i){
-        arguments[i] = &argList[i][0];
-    }
-    int status;
-    int pid = fork();
-    
-    if(pid < 0){
-        perror("Forking Error");
-        exit(1);
-    }else if (pid == 0){ //Child
-        if(execvp(arguments[0],arguments.data())<0){
-            perror("Executable or arg Error");
-            return false;
-        }
-    }else if (pid > 0) {//Parent
-        if(waitpid(pid, &status, 0) == -1 && errno == EINTR)
-            perror("Wait Error");
-    }
-    return status;
-}
-
 //Returns the position of operators and fixes arguments
 //Also Checks if all the inputs are correct
 bool concatArg(vector<string> &argList){
@@ -168,6 +144,7 @@ void singleCommand(vector<string> argList){
     }
 }
 
+//This is for handeling CD
 bool comCD(vector<string> args){
     string oldPwd, newPwd;
     //Changes current directory to home
@@ -259,7 +236,6 @@ bool comCD(vector<string> args){
 }
 
 //============Main management for the arguments===============
-//+++++++++++++++++++++++++=BROKEN++++++++++++++++++++++++++++++
 void allCommand(vector<string> argList){
     int pipeNum = 0, status;
     vector<string> args;
@@ -274,74 +250,14 @@ void allCommand(vector<string> argList){
         }
     }
     commands.push_back(args);
-    //For if there is no pipes
+    //For if there is no pipes, currently working
     if(pipeNum == 0){
         singleCommand(argList);
         return;
     }
-    
-//========================PIPES============================
-    /*int pipefd[2];
-    pid_t pid;
-    if(pipeNum == 1){
-        if (pipe(pipefd) == -1) {
-            perror("pipe");
-            return;
-        }
-        pid = fork();
-        if (pid == 0) { //Child Runs the first Function
-            close(pipefd[1]); //Close outfile end
-            vector<char *> arguments;
-            for(size_t i = 0; i < commands[1].size(); ++i){
-                arguments.push_back(&commands[1][i][0]);
-            }
-            arguments.push_back('\0');
-            
-            if(dup2(pipefd[0],0)<0){
-                perror("dup fd0");
-                exit(1);
-            }
-            
-            if(execvp(arguments[0],arguments.data())<0){
-                perror("Executable Child");
-                exit(1);
-            }
-            close(pipefd[0]); //Close infile
-        }else{ //Parent runs the other function
-            close(pipefd[0]);
-            vector<char *> arguments;
-            for(size_t i = 0; i < commands[0].size(); ++i){
-                arguments.push_back(&commands[0][i][0]);
-            }
-            arguments.push_back('\0');
-            
-            if(dup2(pipefd[1],1)<0){
-                perror("dup fd1");
-                exit(1);
-            }
-            
-            if(execvp(arguments[0],arguments.data())<0){
-                perror("Executable Parent");
-                exit(1);
-            }
-            close(pipefd[1]); 
-            wait(&status);
-            if(status<0){
-                perror("Wait");
-                exit(1);
-            }
-            return;
-        }
-    }else{
-        cout << "Sorry too many Pipes" << endl;
-    }*/
-    
-    //pids = #of forks
-    /*pidfd
-        0,2,4 are reads
-        1,3,5 are writes[]
-    */  
-    
+
+//+++++++++++++++++++++++++=BROKEN++++++++++++++++++++++++++++++   
+//=========================PIPES=================================
     pid_t* pids = new pid_t[pipeNum];
     pid_t* forks = new pid_t[pipeNum+1];
     int* pidfd = new int[pipeNum*2]; 
@@ -456,7 +372,8 @@ int main(int argc,char **argv){
     newAction.sa_handler = sigHandler;
     sigemptyset(&newAction.sa_mask);
     newAction.sa_flags = 0;
-        
+    
+    //For handeling ^C and such
     if(oldAction.sa_handler != SIG_IGN){
         if(sigaction(SIGINT, &newAction, &oldAction )< 0){
             perror("sigaction");
@@ -486,10 +403,10 @@ int main(int argc,char **argv){
         
         cout << dir <<" $ ";
         cout.flush();//flush just to be safe
-        
         cin.clear();
         comment = false;
-        getline(cin,input);//get input
+        getline(cin,input);
+
 //================Tokenize the input into multiple parts==============
         //separators
         char_separator<char> delim(" ",";#");
