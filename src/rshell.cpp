@@ -29,22 +29,27 @@ bool properInput(vector<string> argList){
     for(unsigned int i = 0; i<argList.size();++i){
         if(argList[i] == ">"){
             if(i+1>=argList.size()){
-                cout<< ">: expect output file" << endl;
+                cerr<< ">: expect output file" << endl;
                 return false;
             }
         }else if(argList[i] == ">>"){
             if(i+1>=argList.size()){
-                cout<< ">>: expect output file" << endl;
+                cerr<< ">>: expect output file" << endl;
                 return false;
             }
         }else if(argList[i] == "<"){
             if(i+1>=argList.size()){
-                cout<< "<: expect input file" << endl;
+                cerr<< "<: expect input file" << endl;
                 return false;
             }
         }else if(argList[i] == "||"){
             if(i+1>=argList.size()){
-                cout<< "||: expect input file" << endl;
+                cerr<< "||: expect input file" << endl;
+                return false;
+            }
+        }else if(argList[i] == "|"){
+            if(i+1>=argList.size()){
+                cerr<< "||: expect input file" << endl;
                 return false;
             }
         }
@@ -257,9 +262,43 @@ bool comCD(vector<string> args){
     return true;
 }
 
+bool pipeCommand(vector<vector<string> >commands){
+    if(commands.size()==1){
+        singleCommand(commands[0]);
+    }
+    vector<string> cur = commands[0];
+    commands.erase(args[0]);
+    //=========================PIPES================================
+    int* pipes = new int[2];
+    if(pipe(pipes)<0){
+        perror("pipe");
+        return false;
+    }
+    int pid = fork();
+    if(pid==0){
+        if(close(pipes[1]<0)){
+            perror("close 1");
+            return false;
+        }
+        if(dup2(pipes[0],0)<0){
+            perror("dup2");
+            return false;
+        }
+        if(close(pipes[0]<0)){
+            perror("close 0");
+            return false;
+        }
+        pipeCommand(commands);
+    }else if(pid>0){
+        
+
+    return true;
+}
+
 //============Main management for the arguments===============
-void allCommand(vector<string> argList){
-    int pipeNum = 0, status;
+bool allCommand(vector<string> argList){
+    int pipeNum = 0;
+    bool status=false;
     vector<string> args;
     vector<vector<string> > commands;
     for(unsigned int i = 0; i<argList.size();++i){
@@ -274,105 +313,14 @@ void allCommand(vector<string> argList){
     commands.push_back(args);
     //For if there is no pipes, currently working
     if(pipeNum == 0){
-        singleCommand(argList);
-        return;
+        return singleCommand(argList);
+        
+    }else{
+        return pipeCommand(commands);
     }
-
-//+++++++++++++++++++++++++=BROKEN++++++++++++++++++++++++++++++   
-//=========================PIPES=================================
-    pid_t* pids = new pid_t[pipeNum];
-    pid_t* forks = new pid_t[pipeNum+1];
-    int* pidfd = new int[pipeNum*2]; 
-    
-    //Set up pipes
-    for( int j=0; j < pipeNum; ++j){
-        pipe(pidfd + (j*2));
-    }
-    for( int i=0; i < pipeNum + 1; ++i){
-        //cout << "i: " << i << endl;
-        if ((forks[i] = fork()) < 0) {
-            perror("fork");
-            return;
-        } else if (forks[i] == 0) {
-        //Where to run runargs();
-            if(i==0){//-------------------------------------First 
-                //cout << "First Fork" << endl;
-                //Redirect cout to first pipe
-                if(dup2(pidfd[1],1)<0){
-                    perror("dup2");
-                    return;
-                }
-                singleCommand(commands[i]);
-                //close all the pipes
-                for(int j = 0;j<pipeNum*2;++j){
-                    if(j != 1){
-                        if(close(pidfd[j])<0){
-                            perror("close");
-                        }
-                    }
-                } 
-            }else if(i==pipeNum){//---------------------Last Fork
-                //cout << "Last Fork" << endl;
-                //Redirect cin to last pipe
-                if(dup2(pidfd[(i-1)*2],0)<0){
-                    perror("dup2");
-                    return;
-                }
-                // singleCommand(commands[i]);
-                // for(int j = 0;j<pipeNum*2;++j){
-                //     close(pidfd[j]);
-                // } 
-            }else{//----------------------------------------Other Fork
-                //cout << " Fork" << endl;
-                //Redirect pipes in the mid
-                if(dup2(pidfd[(i-1)*2],0)<0){
-                    perror("dup2");
-                    return;
-                }
-                
-                //Changes cin and cout
-                if(dup2(pidfd[(i-1)*2 + 3],1)<0){
-                    perror("dup2");
-                    return;
-                }
-                singleCommand(commands[i]);
-                for(int j = 0;j<pipeNum*2;++j){
-                    close(pidfd[j]);
-                } 
-            }
-            singleCommand(commands[i]);
-            for(int j = 0;j < pipeNum*2;++j){
-                cout << "child closed: " << j << endl;
-                close(pidfd[j]);
-            } 
-            exit(0);
-        }
-    }
-    
-    for(int j = 0;j<pipeNum*2;++j){
-        cout << "parent closed: " << j << endl;
-        close(pidfd[j]);
-    } 
-    
-    pid_t pid;
-    //waits for all the child
-    for( int w=0; w < pipeNum+1; ++w) {
-        sigignore(SIGINT);
-        if((pid = wait(&status))<0){
-            perror("wait");
-            return;
-        }
-        cout << "Child PID: "<< pid << endl;
-    }
-    
-    //De-allocate memory
-    delete [] pids;
-    delete [] pidfd;
-    delete [] forks;
-    forks = 0;
-    pids = 0;
-    pidfd = 0;
-    
+    for(int i = 0; i<pipeNum; ++i){
+        waitpid(-1,&status,0);
+    return status;
 }
 
 //=========================MAIN FUNCTION=======================
