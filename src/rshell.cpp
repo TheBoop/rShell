@@ -24,25 +24,17 @@ void sigHandler(int sig){
     }
 }
 
-//Returns the position of operators and fixes arguments
-//Also Checks if all the inputs are correct
-bool concatArg(vector<string> &argList){
-    //cout << argList.size() << endl;
+//checks if proper files are there for input output
+bool properInput(vector<string> argList){
     for(unsigned int i = 0; i<argList.size();++i){
-    //==========Output redirection================
         if(argList[i] == ">"){
             if(i+1>=argList.size()){
                 cout<< ">: expect output file" << endl;
                 return false;
-            }else if(argList[i+1]==">"){
-                if(i+2>=argList.size()){
-                    cout<< ">>: expect output file"<<endl;
-                    return false;
-                }
             }
         }else if(argList[i] == ">>"){
             if(i+1>=argList.size()){
-                cout<< ">: expect output file" << endl;
+                cout<< ">>: expect output file" << endl;
                 return false;
             }
         }else if(argList[i] == "<"){
@@ -50,20 +42,49 @@ bool concatArg(vector<string> &argList){
                 cout<< "<: expect input file" << endl;
                 return false;
             }
-        }else if(argList[i] == "|"){
+        }else if(argList[i] == "||"){
             if(i+1>=argList.size()){
-                cout<< "|: expect input file" << endl;
+                cout<< "||: expect input file" << endl;
                 return false;
             }
         }
-    //==============Input Redirection============
-        //cout << argList[i] << endl;
     }
     return true;
 }
 
+//Returns the position of operators and fixes arguments
+//Also Checks if all the inputs are correct
+void concatArg(vector<string> &argList){
+    for(unsigned int i = 1; i<argList.size();++i){
+        if(argList[i] == ">" && argList[i-1] == ">"){
+            argList[i-1] = ">>";
+            argList.erase(argList.begin()+i);
+            --i;
+        }else if(argList[i] == "<" && argList[i-1] == "<"){
+            argList[i-1] = "<<";
+            argList.erase(argList.begin()+i);
+            --i;
+        }else if(argList[i] == "<<" && argList[i-1] == "<"){
+            argList[i-1] = "<<<";
+            argList.erase(argList.begin()+i);
+            --i;
+        }else if(argList[i] == "|" && argList[i-1] == "|"){
+            argList[i-1] = "||";
+            argList.erase(argList.begin()+i);
+            --i;
+        }else if(argList[i] == ">" && argList[i-1] == ">"){
+            argList[i-1] = ">>";
+            argList.erase(argList.begin()+i);
+            --i;
+        }else if(argList[i]=="&" && argList[i-1] == "&"){
+            argList[i-1] = "&&";
+            argList.erase(argList.begin()+i);
+            --i;
+        }
+    }
+}
 //============Management for the single part of args===============
-void singleCommand(vector<string> argList){
+bool singleCommand(vector<string> argList){
     vector<string> singleArg;
     int fd0,fd1,status;
     //Where the string get's parsed 
@@ -142,6 +163,7 @@ void singleCommand(vector<string> argList){
             perror("wait error");
         }
     }
+    return status;
 }
 
 //This is for handeling CD
@@ -353,9 +375,13 @@ void allCommand(vector<string> argList){
     
 }
 
+//=========================MAIN FUNCTION=======================
 int main(int argc,char **argv){
-    //Login
-    /*char host[200];//allocate memeory for host
+    string home = getenv("HOME");
+    string dir;
+    //char cwd[BUFSIZ];
+    //Loginv
+    char host[200];//allocate memeory for host
     char* user;
     int hStat = gethostname(host, 200);
     if(hStat !=0){
@@ -365,8 +391,7 @@ int main(int argc,char **argv){
         user = getlogin();
     }else{
         perror("Cannot get User Name");
-    }*/
-    char cwd[BUFSIZ];
+    }
 
     struct sigaction newAction, oldAction;
     newAction.sa_handler = sigHandler;
@@ -383,37 +408,34 @@ int main(int argc,char **argv){
     //Declarations
     string input;
     vector<string> args;
+    vector<string> tempArgs;
     bool comment = false;
 
     //While loop that repeats $ and cin command
     while(true){
-        
-        //cout << user << "@" << host << " $ ";
-        if(getcwd(cwd,BUFSIZ) == NULL){
+        cout << user << "@" << host << "$ ";
+        /*if(getcwd(cwd,BUFSIZ) == NULL){
             perror("getcwd");
         }
-        string home = getenv("HOME");
-        string dir = cwd;
+        dir = cwd;
         if(home == "\0"){
             perror("getenv");
         }
         if(dir.find(home,0) != string::npos){
             dir.replace(0,home.size(),"~");
         }
+        cout << dir <<"$ ";*/
         
-        cout << dir <<" $ ";
         cout.flush();//flush just to be safe
         cin.clear();
         comment = false;
         getline(cin,input);
 
 //================Tokenize the input into multiple parts==============
-        //separators
-        char_separator<char> delim(" ",";#");
+        char_separator<char> delim(" ",";#>|&");
         tokenizer<char_separator<char> > mytok(input, delim);//seperat the input
 
         for(mytok::iterator it = mytok.begin(); it != mytok.end(); ++it){
-            //cout << "token: " << *it  << endl; 
             //cout << "token: " << *it  << endl; 
             if(*it == "exit"){
                 exit(0);
@@ -423,13 +445,34 @@ int main(int argc,char **argv){
                 args.push_back(*it);
             }
         }
+        concatArg(args);
         //==============RUN THE COMMANDS======================
-        if(concatArg(args)){
-            if(args[0]=="cd"){
-                comCD(args);
-            }else{
-                allCommand(args);
+        /*for(unsigned int j=0; j<args.size();++j){
+            cout << args[j] << endl;
+        }               DEBUG PURPOSES*/ 
+        if(properInput(args)){
+            for(unsigned int i=0 ; i<args.size();++i){
+                if(args[i]==";"){
+                    singleCommand(tempArgs);
+                    tempArgs.clear();
+                }else if(args[i]!="&&" && args[i]!="||"){
+                    tempArgs.push_back(args[i]);
+                }else if(args[i]=="||"){
+                    if(!singleCommand(tempArgs)){
+                        tempArgs.clear();
+                        break; 
+                    }
+                    tempArgs.clear();
+                }else if(args[i]=="&&"){ 
+                    if(singleCommand(tempArgs)){
+                        tempArgs.clear();
+                        break;
+                    }
+                    tempArgs.clear();
+                }
             }
+            singleCommand(tempArgs);
+            tempArgs.clear();
         }
         args.clear();
     }

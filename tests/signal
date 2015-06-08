@@ -1,0 +1,479 @@
+Script started on Fri 29 May 2015 11:36:47 PM PDT
+~
+dding002@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * checksyscalls.sh      is your cpp file doing proper error checking?     |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd cs100/assignment/assignment0/
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m (master) [0;36m$[0m make run
+bin/rshell
+~/cs100/assignment/assignment0 $ cd s  cd # Takes h us to the home directory
+~ $ cd ~ - $ #Takes va  back to previous directory
+~/cs100/assignment/assignment0 $ cd ..
+~/cs100/assignment $ cd    cd assignment0/bin
+~/cs100/assignment/assignment0/bin $ cd ~/cs100 #Treats ~ as home directory
+~/cs100 $ cd -
+chdir: No such file or directory
+~/cs100 $ cd -    cd assigment
+chdir: No such file or directory
+~/cs100 $ ls
+assignment  git  labs
+~/cs100 $ cd assignment
+~/cs100/assignment $ cat #Now to test the ^C
+^C
+~/cs100/assignment $ ls -R
+.:
+assignment0  Quiz4
+
+./assignment0:
+bin  LICENSE.md  makefile  README.md  src  test
+
+./assignment0/bin:
+ls  rshell
+
+./assignment0/src:
+handle_signals.cpp  ls.cpp  rshell.cpp
+
+./assignment0/test:
+signal
+
+./Quiz4:
+a.out  README.md  test.cpp  test.txt  test.txt~
+~/cs100/assignment $ ^C
+~/cs100/assignment $ ls -RL l
+.:
+total 8
+drwx------ 6 dding002 classes 4096 May 29 23:15 assignment0
+drwxr-xr-x 2 dding002 classes 4096 May 22 08:39 Quiz4
+
+./assignment0:
+total 24
+drwx------ 2 dding002 classes 4096 May 29 23:29 bin
+-rw------- 1 dding002 classes 1074 Apr 26 18:39 LICENSE.md
+-rw------- 1 dding002 classes  600 May 29 23:12 makefile
+-rw------- 1 dding002 classes 1337 May  5 14:21 README.md
+drwx------ 2 dding002 classes 4096 May 29 23:29 src
+drwx------ 2 dding002 classes 4096 May 29 23:29 test
+
+./assignment0/bin:
+total 440
+-rwx------ 1 dding002 classes 212349 May 11 16:59 ls
+-rwx------ 1 dding002 classes 226252 May 29 23:29 rshell
+
+./assignment0/src:
+total 28
+-rw------- 1 dding002 classes  1169 May 29 23:14 handle_signals.cpp
+-rw------- 1 dding002 classes  7528 May  5 14:21 ls.cpp
+-rw------- 1 dding002 classes 15053 May 29 23:29 rshell.cpp
+
+./assignment0/test:
+total 0
+-rw------- 1 dding002 classes 0 May 29 23:29 signal
+
+./Quiz4:
+total 32
+-rwx------ 1 dding002 classes 8547 May 21 23:27 a.out
+-rw------- 1 dding002 classes 9488 Apr  6 15:12 README.md
+-rw------- 1 dding002 classes   91 May 21 23:26 test.cpp
+-rw-r--r-- 1 dding002 classes   53 May 21 23:28 test.txt
+-rw-r--r-- 1 dding002 classes  101 May 21 22:42 test.txt~
+~/cs100/assignment $ ^C
+~/cs100/assignment $ exit
+
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m (master) [0;36m$[0m ls
+bin  LICENSE.md  makefile  README.md  src  test
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m (master) [0;36m$[0m vim src/rshell[K[K[K[K[K[K[K[K[K[K[K[K[K[Kgit add test
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m (master) [0;36m$[0m git [K[K[K[Kvim  /[K[K/ [K[Ksrc/rshell
+[?1000h7[?47h[?1h=[1;62r[m[37m[40m[1m[H[2J[62;1H"src/rshell" [New File][>c[1;1H[1m[33m  1 [m[37m[40m[1m
+[1m[34m~                                                                               [3;1H~                                                                               [4;1H~                                                                               [5;1H~                                                                               [6;1H~                                                                               [7;1H~                                                                               [8;1H~                                                                               [9;1H~                                                                               [10;1H~                                                                               [11;1H~                                                                               [12;1H~                                                                               [13;1H~                                                                               [14;1H~                                                                               [15;1H~                                                                               [16;1H~                                                                               [17;1H~                                                                               [18;1H~                                                                               [19;1H~                                                                               [20;1H~                                                                               [21;1H~                                                                               [22;1H~                                                                               [23;1H~                                                                               [24;1H~                                                                               [25;1H~                                                                               [26;1H~                                                                               [27;1H~                                                                               [28;1H~                                                                               [29;1H~                                                                               [30;1H~                                                                               [31;1H~                                                                               [32;1H~                                                                               [33;1H~                                                                               [34;1H~                                                                               [35;1H~                                                                               [36;1H~                                                                               [37;1H~                                                                               [38;1H~                                                                               [39;1H~                                                                               [40;1H~                                                                               [41;1H~                                                                               [42;1H~                                                                               [43;1H~                                                                               [44;1H~                                                                               [45;1H~                                                                               [46;1H~                                                                               [47;1H~                                                                               [48;1H~                                                                               [49;1H~                                                                               [50;1H~                                                                               [51;1H~                                                                               [52;1H~                                                                               [53;1H~                                                                               [54;1H~                                                                               [55;1H~                                                                               [56;1H~                                                                               [57;1H~                                                                               [58;1H~                                                                               [59;1H~                                                                               [60;1H~                                                                               [61;1H~                                                                               [m[37m[40m[1m[62;63H0,0-1[9CAll[1;5H[?1000l[?1002hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[62;1H[K[62;1H:q[?1002l[62;1H[K[62;1H[?1l>[2J[?47l8[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m (master) [0;36m$[0m vim src/rshell.cpp 
+[?1000h7[?47h[?1h=[1;62r[m[37m[40m[1m[H[2J[62;1H[1m[37m[41mE325: ATTENTION[m[37m[40m[1m
+Found a swap file by the name "src/.rshell.cpp.swp"
+[10Cowned by: dding002   dated: Fri May 29 22:52:20 2015
+[9Cfile name: ~dding002/cs100/assignment/assignment0/src/rshell.cpp
+[10Cmodified: no
+[9Cuser name: dding002   host name: hammer.cs.ucr.edu
+[8Cprocess ID: 46501 (still running)
+While opening file "src/rshell.cpp"
+[13Cdated: Fri May 29 23:29:25 2015
+      NEWER than swap file!
+
+(1) Another program may be editing the same file.
+    If this is the case, be careful not to end up with two
+    different instances of the same file when making changes.
+    Quit, or continue with caution.
+
+(2) An edit session for this file crashed.
+    If this is the case, use ":recover" or "vim -r src/rshell.cpp"
+    to recover the changes (see ":help recovery").
+    If you did this already, delete the swap file "src/.rshell.cpp.swp"
+    to avoid this message.
+[?1000l
+[1m[32mSwap file "src/.rshell.cpp.swp" already exists![m[37m[40m[1m
+[1m[32m[O]pen Read-Only, (E)dit anyway, (R)ecover, (Q)uit, (A)bort: [?1000h[m[37m[40m[1m[62;1H[K[62;1H"src/rshell.cpp" 520L, 15053C[>c[1;1H[1m[33m461 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(sigaction([1m[35mSIGINT[m[37m[40m[1m, &newAction, &oldAction )< [1m[35m0[m[37m[40m[1m){
+[1m[33m462 [m[37m[40m[1m[11C perror([1m[35m"sigaction"[m[37m[40m[1m);
+[1m[33m463 [m[37m[40m[1m[7C }
+[1m[33m464 [m[37m[40m[1m    }
+[1m[33m465 
+466 [m[37m[40m[1m    [1m[36m//Declarations[m[37m[40m[1m
+[1m[33m467 [m[37m[40m[1m    string input;
+[1m[33m468 [m[37m[40m[1m    vector<string> args;
+[1m[33m469 [m[37m[40m[1m    [1m[32mbool[m[37m[40m[1m comment = [1m[35mfalse[m[37m[40m[1m;
+[1m[33m470 
+471 [m[37m[40m[1m    [1m[36m//While loop that repeats $ and cin command[m[37m[40m[1m
+[1m[33m472 [m[37m[40m[1m    [1m[33mwhile[m[37m[40m[1m([1m[35mtrue[m[37m[40m[1m){
+[1m[33m473 
+474 [m[37m[40m[1m[7C [1m[36m//cout << user << "@" << host << " $ ";[m[37m[40m[1m
+[1m[33m475 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(getcwd(cwd,[1m[35mBUFSIZ[m[37m[40m[1m) == [1m[35mNULL[m[37m[40m[1m){
+[1m[33m476 [m[37m[40m[1m[11C perror([1m[35m"getcwd"[m[37m[40m[1m);
+[1m[33m477 [m[37m[40m[1m[7C }
+[1m[33m478 [m[37m[40m[1m[7C string home = getenv([1m[35m"HOME"[m[37m[40m[1m);
+[1m[33m479 [m[37m[40m[1m[7C string dir = cwd;
+[1m[33m480 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(home == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){
+[1m[33m481 [m[37m[40m[1m[11C perror([1m[35m"getenv"[m[37m[40m[1m);
+[1m[33m482 [m[37m[40m[1m[7C }
+[1m[33m483 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(dir.find(home,[1m[35m0[m[37m[40m[1m) != string::npos){
+[1m[33m484 [m[37m[40m[1m[11C dir.replace([1m[35m0[m[37m[40m[1m,home.size(),[1m[35m"~"[m[37m[40m[1m);
+[1m[33m485 [m[37m[40m[1m[7C }
+[1m[33m486 
+487 [m[37m[40m[1m[7C cout << dir <<[1m[35m" $ "[m[37m[40m[1m;
+[1m[33m488 [m[37m[40m[1m[7C cout.flush();[1m[36m//flush just to be safe[m[37m[40m[1m
+[1m[33m489 
+490 [m[37m[40m[1m[7C cin.clear();
+[1m[33m491 [m[37m[40m[1m[7C comment = [1m[35mfalse[m[37m[40m[1m;
+[1m[33m492 [m[37m[40m[1m[7C getline(cin,input);[1m[36m//get input[m[37m[40m[1m
+[1m[33m493 [m[37m[40m[1m[1m[36m//================Tokenize the input into multiple parts==============[m[37m[40m[1m
+[1m[33m494 [m[37m[40m[1m[7C [1m[36m//separators[m[37m[40m[1m
+[1m[33m495 [m[37m[40m[1m[7C char_separator<[1m[32mchar[m[37m[40m[1m> delim([1m[35m" "[m[37m[40m[1m,[1m[35m";#"[m[37m[40m[1m);
+[1m[33m496 [m[37m[40m[1m[7C tokenizer<char_separator<[1m[32mchar[m[37m[40m[1m> > mytok(input, delim);[1m[36m//seperat the ii[m[37m[40m[1m[37;1H[1m[33m    [m[37m[40m[1m[1m[36mnput[m[37m[40m[1m
+[1m[33m497 
+498 [m[37m[40m[1m        [1m[33mfor[m[37m[40m[1m(mytok::iterator it = mytok.begin(); it != mytok.end(); ++it){
+[1m[33m499 [m[37m[40m[1m            [1m[36m//cout << "token: " << *it  << endl; [m[37m[40m[1m
+[1m[33m500 [m[37m[40m[1m            [1m[36m//cout << "token: " << *it  << endl; [m[37m[40m[1m[41;54H[K[42;1H[1m[33m501 [m[37m[40m[1m            [1m[33mif[m[37m[40m[1m(*it == [1m[35m"exit"[m[37m[40m[1m){[42;35H[K[43;1H[1m[33m502 [m[37m[40m[1m                exit([1m[35m0[m[37m[40m[1m);
+[1m[33m503 [m[37m[40m[1m            }[1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m(*it == [1m[35m"#"[m[37m[40m[1m){[44;38H[K[45;1H[1m[33m504 [m[37m[40m[1m                comment = [1m[35mtrue[m[37m[40m[1m;[45;36H[K[46;1H[1m[33m505 [m[37m[40m[1m            }[1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m(!comment){
+[1m[33m506 [m[37m[40m[1m[8C        args.push_back(*it);[47;41H[K[48;1H[1m[33m507 [m[37m[40m[1m            }[48;18H[K[49;1H[1m[33m508 [m[37m[40m[1m[7C }
+[1m[33m509 [m[37m[40m[1m        [1m[36m//==============RUN THE COMMANDS======================[m[37m[40m[1m
+[1m[33m510 [m[37m[40m[1m        [1m[33mif[m[37m[40m[1m(concatArg(args)){[51;33H[K[52;1H[1m[33m511 [m[37m[40m[1m            [1m[33mif[m[37m[40m[1m(args[[1m[35m0[m[37m[40m[1m]==[1m[35m"cd"[m[37m[40m[1m){[52;35H[K[53;1H[1m[33m512 [m[37m[40m[1m                comCD(args);[53;33H[K[54;1H[1m[33m513 [m[37m[40m[1m[11C }[1m[33melse[m[37m[40m[1m{
+[1m[33m514 [m[37m[40m[1m                allCommand(args);[55;38H[K[56;1H[1m[33m515 [m[37m[40m[1m            }[56;18H[K[57;1H[1m[33m516 [m[37m[40m[1m        }[57;14H[K[58;1H[1m[33m517 [m[37m[40m[1m        args.clear();[58;26H[K[59;1H[1m[33m518 [m[37m[40m[1m    }[59;10H[K[60;1H[1m[33m519 [m[37m[40m[1m    [1m[33mreturn[m[37m[40m[1m [1m[35m0[m[37m[40m[1m;
+[1m[33m520 [m[37m[40m[1m}[61;6H[K[62;63H492,9[9CBot[32;13H[?1000l[?1002hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[1;61r[1;1H[3L[1;62r[1;1H[1m[33m458 [m[37m[40m[1m    newAction.sa_flags = [1m[35m0[m[37m[40m[1m;
+[1m[33m459 
+460 [m[37m[40m[1m    [1m[33mif[m[37m[40m[1m(oldAction.sa_handler != [1m[35mSIG_IGN[m[37m[40m[1m){[62;1H[K[62;63H492,9[9C99%[35;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m455 [m[37m[40m[1m    [1m[32mstruct[m[37m[40m[1m sigaction newAction, oldAction;
+[1m[33m456 [m[37m[40m[1m    newAction.sa_handler = sigHandler;
+[1m[33m457 [m[37m[40m[1m    sigemptyset(&newAction.sa_mask);[62;63H[K[62;63H492,9[9C98%[38;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m452 [m[37m[40m[1m[1m[36m    }*/[m[37m[40m[1m
+[1m[33m453 [m[37m[40m[1m    [1m[32mchar[m[37m[40m[1m cwd[[1m[35mBUFSIZ[m[37m[40m[1m];
+[1m[33m454 [m[37m[40m[1m[62;63H[K[62;63H492,9[9C98%[41;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m449 [m[37m[40m[1m[1m[36m        user = getlogin();[m[37m[40m[1m
+[1m[33m450 [m[37m[40m[1m[1m[36m    }else{[m[37m[40m[1m
+[1m[33m451 [m[37m[40m[1m[1m[36m        perror("Cannot get User Name");[m[37m[40m[1m[62;63H[K[62;63H492,9[9C97%[44;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m446 [m[37m[40m[1m[1m[36m        perror("Cannot get Host Name");[m[37m[40m[1m
+[1m[33m447 [m[37m[40m[1m[1m[36m    }[m[37m[40m[1m
+[1m[33m448 [m[37m[40m[1m[1m[36m    if(getlogin() != NULL){[m[37m[40m[1m[62;63H[K[62;63H492,9[9C96%[47;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m443 [m[37m[40m[1m[1m[36m    char* user;[m[37m[40m[1m
+[1m[33m444 [m[37m[40m[1m[1m[36m    int hStat = gethostname(host, 200);[m[37m[40m[1m
+[1m[33m445 [m[37m[40m[1m[1m[36m    if(hStat !=0){[m[37m[40m[1m[62;63H[K[62;63H492,9[9C96%[50;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m440 [m[37m[40m[1m[1m[32mint[m[37m[40m[1m main([1m[32mint[m[37m[40m[1m argc,[1m[32mchar[m[37m[40m[1m **argv){
+[1m[33m441 [m[37m[40m[1m    [1m[36m//Login[m[37m[40m[1m
+[1m[33m442 [m[37m[40m[1m    [1m[36m/*char host[200];//allocate memeory for host[m[37m[40m[1m[62;63H[K[62;63H492,9[9C95%[53;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m437 
+438 [m[37m[40m[1m}
+[1m[33m439 [m[37m[40m[1m[62;63H[K[62;63H492,9[9C94%[56;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m434 [m[37m[40m[1m    forks = [1m[35m0[m[37m[40m[1m;
+[1m[33m435 [m[37m[40m[1m    pids = [1m[35m0[m[37m[40m[1m;
+[1m[33m436 [m[37m[40m[1m    pidfd = [1m[35m0[m[37m[40m[1m;[62;63H[K[62;63H491,9[9C94%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m431 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] pids;
+[1m[33m432 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] pidfd;
+[1m[33m433 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] forks;[62;63H[K[62;63H488,9[9C93%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m428 [m[37m[40m[1m    }
+[1m[33m429 
+430 [m[37m[40m[1m    [1m[36m//De-allocate memory[m[37m[40m[1m[56;49H[46m{[58;13H}[m[37m[40m[1m[62;63H[K[62;63H485,9[9C93%[58;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m489 
+490 [m[37m[40m[1m[7C cin.clear();
+[1m[33m491 [m[37m[40m[1m[7C comment = [1m[35mfalse[m[37m[40m[1m;[62;63H[K[62;63H485,9[9C93%[55;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m428 [m[37m[40m[1m    }
+[1m[33m429 
+430 [m[37m[40m[1m    [1m[36m//De-allocate memory[m[37m[40m[1m[62;63H[K[62;63H485,9[9C93%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m425 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m426 [m[37m[40m[1m[7C }
+[1m[33m427 [m[37m[40m[1m[7C cout << [1m[35m"Child PID: "[m[37m[40m[1m<< pid << endl;[56;29H[46m{[58;13H}[m[37m[40m[1m[59;49H{[61;13H}[62;63H[K[62;63H482,9[9C92%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m422 [m[37m[40m[1m[7C sigignore([1m[35mSIGINT[m[37m[40m[1m);
+[1m[33m423 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m((pid = wait(&status))<[1m[35m0[m[37m[40m[1m){
+[1m[33m424 [m[37m[40m[1m[11C perror([1m[35m"wait"[m[37m[40m[1m);[59;29H{[61;13H}[62;63H[K[62;63H479,9[9C91%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m419 [m[37m[40m[1m    pid_t pid;
+[1m[33m420 [m[37m[40m[1m    [1m[36m//waits for all the child[m[37m[40m[1m
+[1m[33m421 [m[37m[40m[1m    [1m[33mfor[m[37m[40m[1m( [1m[32mint[m[37m[40m[1m w=[1m[35m0[m[37m[40m[1m; w < pipeNum+[1m[35m1[m[37m[40m[1m; ++w) {[62;63H[K[62;63H476,9[9C91%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m416 [m[37m[40m[1m[7C close(pidfd[j]);
+[1m[33m417 [m[37m[40m[1m    }
+[1m[33m418 [m[37m[40m[1m[62;63H[K[62;63H473,8[9C90%[58;12H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m413 
+414 [m[37m[40m[1m    [1m[33mfor[m[37m[40m[1m([1m[32mint[m[37m[40m[1m j = [1m[35m0[m[37m[40m[1m;j<pipeNum*[1m[35m2[m[37m[40m[1m;++j){
+[1m[33m415 [m[37m[40m[1m[7C cout << [1m[35m"parent closed: "[m[37m[40m[1m << j << endl;[62;63H[K[62;63H470,0-1[7C89%[58;5H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m410 [m[37m[40m[1m[11C exit([1m[35m0[m[37m[40m[1m);
+[1m[33m411 [m[37m[40m[1m[7C }
+[1m[33m412 [m[37m[40m[1m    }[62;63H[K[62;63H467,9[9C89%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m407 [m[37m[40m[1m[15C cout << [1m[35m"child closed: "[m[37m[40m[1m << j << endl;
+[1m[33m408 [m[37m[40m[1m[15C close(pidfd[j]);
+[1m[33m409 [m[37m[40m[1m[11C }[54;44H[46m{[58;9H}[m[37m[40m[1m[62;63H[K[62;63H464,5[9C88%[58;9H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m404 [m[37m[40m[1m[11C }
+[1m[33m405 [m[37m[40m[1m[11C singleCommand(commands[i]);
+[1m[33m406 [m[37m[40m[1m[11C [1m[33mfor[m[37m[40m[1m([1m[32mint[m[37m[40m[1m j = [1m[35m0[m[37m[40m[1m;j < pipeNum*[1m[35m2[m[37m[40m[1m;++j){[57;44H{[61;9H}[62;63H[K[62;63H461,9[9C87%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m401 [m[37m[40m[1m[15C [1m[33mfor[m[37m[40m[1m([1m[32mint[m[37m[40m[1m j = [1m[35m0[m[37m[40m[1m;j<pipeNum*[1m[35m2[m[37m[40m[1m;++j){
+[1m[33m402 [m[37m[40m[1m[19C close(pidfd[j]);
+[1m[33m403 [m[37m[40m[1m[15C }[62;63H[K[62;63H458,9[9C87%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m398 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m399 [m[37m[40m[1m[15C }
+[1m[33m400 [m[37m[40m[1m[15C singleCommand(commands[i]);[62;63H[K[62;63H455,9[9C86%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m395 [m[37m[40m[1m[15C [1m[36m//Changes cin and cout[m[37m[40m[1m
+[1m[33m396 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(dup2(pidfd[(i-[1m[35m1[m[37m[40m[1m)*[1m[35m2[m[37m[40m[1m + [1m[35m3[m[37m[40m[1m],[1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m397 [m[37m[40m[1m[19C perror([1m[35m"dup2"[m[37m[40m[1m);[62;63H[K[62;63H452,7[9C85%[58;11H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m392 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m393 [m[37m[40m[1m[15C }
+[1m[33m394 [m[37m[40m[1m[62;63H[K[62;63H449,9[9C85%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m389 [m[37m[40m[1m[15C [1m[36m//Redirect pipes in the mid[m[37m[40m[1m
+[1m[33m390 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(dup2(pidfd[(i-[1m[35m1[m[37m[40m[1m)*[1m[35m2[m[37m[40m[1m],[1m[35m0[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m391 [m[37m[40m[1m[19C perror([1m[35m"dup2"[m[37m[40m[1m);[62;63H[K[62;63H446,9[9C84%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m386 [m[37m[40m[1m[15C [1m[36m// } [m[37m[40m[1m
+[1m[33m387 [m[37m[40m[1m[11C }[1m[33melse[m[37m[40m[1m{[1m[36m//----------------------------------------Other Fork[m[37m[40m[1m
+[1m[33m388 [m[37m[40m[1m[15C [1m[36m//cout << " Fork" << endl;[m[37m[40m[1m[62;63H[K[62;63H443,9[9C83%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m383 [m[37m[40m[1m[15C [1m[36m// singleCommand(commands[i]);[m[37m[40m[1m
+[1m[33m384 [m[37m[40m[1m[15C [1m[36m// for(int j = 0;j<pipeNum*2;++j){[m[37m[40m[1m
+[1m[33m385 [m[37m[40m[1m[15C [1m[36m//     close(pidfd[j]);[m[37m[40m[1m[58;13H[46m([20C)[m[37m[40m[1m[62;63H[K[62;63H440,9[9C83%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m380 [m[37m[40m[1m[19C perror([1m[35m"dup2"[m[37m[40m[1m);
+[1m[33m381 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m382 [m[37m[40m[1m[15C }[61;13H([20C)[62;63H[K[62;63H437,4[9C82%[58;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m377 [m[37m[40m[1m[15C [1m[36m//cout << "Last Fork" << endl;[m[37m[40m[1m
+[1m[33m378 [m[37m[40m[1m[15C [1m[36m//Redirect cin to last pipe[m[37m[40m[1m
+[1m[33m379 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(dup2(pidfd[(i-[1m[35m1[m[37m[40m[1m)*[1m[35m2[m[37m[40m[1m],[1m[35m0[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){[62;63H[K[62;63H434,9[9C81%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m374 [m[37m[40m[1m[19C }
+[1m[33m375 [m[37m[40m[1m[15C }
+[1m[33m376 [m[37m[40m[1m[11C }[1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m(i==pipeNum){[1m[36m//---------------------Last Fork[m[37m[40m[1m[62;63H[K[62;63H431,9[9C81%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m371 [m[37m[40m[1m[23C [1m[33mif[m[37m[40m[1m(close(pidfd[j])<[1m[35m0[m[37m[40m[1m){
+[1m[33m372 [m[37m[40m[1m[27C perror([1m[35m"close"[m[37m[40m[1m);
+[1m[33m373 [m[37m[40m[1m[23C }[51;43H[46m{[58;9H}[m[37m[40m[1m[62;63H[K[62;63H428,5[9C80%[58;9H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m368 [m[37m[40m[1m[15C [1m[36m//close all the pipes[m[37m[40m[1m
+[1m[33m369 [m[37m[40m[1m[15C [1m[33mfor[m[37m[40m[1m([1m[32mint[m[37m[40m[1m j = [1m[35m0[m[37m[40m[1m;j<pipeNum*[1m[35m2[m[37m[40m[1m;++j){
+[1m[33m370 [m[37m[40m[1m[19C [1m[33mif[m[37m[40m[1m(j != [1m[35m1[m[37m[40m[1m){[54;43H{[61;9H}[62;63H[K[62;63H425,9[9C79%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m365 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m366 [m[37m[40m[1m[15C }
+[1m[33m367 [m[37m[40m[1m[15C singleCommand(commands[i]);[62;63H[K[62;63H422,9[9C79%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m362 [m[37m[40m[1m[15C [1m[36m//Redirect cout to first pipe[m[37m[40m[1m
+[1m[33m363 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(dup2(pidfd[[1m[35m1[m[37m[40m[1m],[1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m364 [m[37m[40m[1m[19C perror([1m[35m"dup2"[m[37m[40m[1m);[62;63H[K[62;63H419,9[9C78%[58;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m423 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m((pid = wait(&status))<[1m[35m0[m[37m[40m[1m){
+[1m[33m424 [m[37m[40m[1m[11C perror([1m[35m"wait"[m[37m[40m[1m);
+[1m[33m425 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m;[62;63H[K[62;63H419,9[9C79%[55;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m426 [m[37m[40m[1m[7C }
+[1m[33m427 [m[37m[40m[1m[7C cout << [1m[35m"Child PID: "[m[37m[40m[1m<< pid << endl;
+[1m[33m428 [m[37m[40m[1m    }[62;63H[K[62;63H419,9[9C79%[52;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m429 
+430 [m[37m[40m[1m    [1m[36m//De-allocate memory[m[37m[40m[1m
+[1m[33m431 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] pids;[62;63H[K[62;63H419,9[9C80%[49;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m432 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] pidfd;
+[1m[33m433 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] forks;
+[1m[33m434 [m[37m[40m[1m    forks = [1m[35m0[m[37m[40m[1m;[62;63H[K[62;63H419,9[9C81%[46;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m435 [m[37m[40m[1m    pids = [1m[35m0[m[37m[40m[1m;
+[1m[33m436 [m[37m[40m[1m    pidfd = [1m[35m0[m[37m[40m[1m;
+[1m[33m437 [m[37m[40m[1m[62;63H[K[62;63H419,9[9C81%[43;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m438 [m[37m[40m[1m}
+[1m[33m439 
+440 [m[37m[40m[1m[1m[32mint[m[37m[40m[1m main([1m[32mint[m[37m[40m[1m argc,[1m[32mchar[m[37m[40m[1m **argv){[62;63H[K[62;63H419,9[9C82%[40;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m441 [m[37m[40m[1m    [1m[36m//Login[m[37m[40m[1m
+[1m[33m442 [m[37m[40m[1m    [1m[36m/*char host[200];//allocate memeory for host[m[37m[40m[1m
+[1m[33m443 [m[37m[40m[1m[1m[36m    char* user;[m[37m[40m[1m[62;63H[K[62;63H419,9[9C83%[37;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m444 [m[37m[40m[1m[1m[36m    int hStat = gethostname(host, 200);[m[37m[40m[1m
+[1m[33m445 [m[37m[40m[1m[1m[36m    if(hStat !=0){[m[37m[40m[1m
+[1m[33m446 [m[37m[40m[1m[1m[36m        perror("Cannot get Host Name");[m[37m[40m[1m[62;63H[K[62;63H419,9[9C83%[34;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m447 [m[37m[40m[1m[1m[36m    }[m[37m[40m[1m
+[1m[33m448 [m[37m[40m[1m[1m[36m    if(getlogin() != NULL){[m[37m[40m[1m
+[1m[33m449 [m[37m[40m[1m[1m[36m        user = getlogin();[m[37m[40m[1m[62;63H[K[62;63H419,9[9C84%[31;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m450 [m[37m[40m[1m[1m[36m    }else{[m[37m[40m[1m
+[1m[33m451 [m[37m[40m[1m[1m[36m        perror("Cannot get User Name");[m[37m[40m[1m
+[1m[33m452 [m[37m[40m[1m[1m[36m    }*/[m[37m[40m[1m[62;63H[K[62;63H419,9[9C85%[28;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m453 [m[37m[40m[1m    [1m[32mchar[m[37m[40m[1m cwd[[1m[35mBUFSIZ[m[37m[40m[1m];
+[1m[33m454 
+455 [m[37m[40m[1m    [1m[32mstruct[m[37m[40m[1m sigaction newAction, oldAction;[62;63H[K[62;63H419,9[9C85%[25;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m456 [m[37m[40m[1m    newAction.sa_handler = sigHandler;
+[1m[33m457 [m[37m[40m[1m    sigemptyset(&newAction.sa_mask);
+[1m[33m458 [m[37m[40m[1m    newAction.sa_flags = [1m[35m0[m[37m[40m[1m;[62;63H[K[62;63H419,9[9C86%[22;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m459 
+460 [m[37m[40m[1m    [1m[33mif[m[37m[40m[1m(oldAction.sa_handler != [1m[35mSIG_IGN[m[37m[40m[1m){
+[1m[33m461 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(sigaction([1m[35mSIGINT[m[37m[40m[1m, &newAction, &oldAction )< [1m[35m0[m[37m[40m[1m){[62;63H[K[62;63H419,9[9C87%[19;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m462 [m[37m[40m[1m[11C perror([1m[35m"sigaction"[m[37m[40m[1m);
+[1m[33m463 [m[37m[40m[1m[7C }
+[1m[33m464 [m[37m[40m[1m    }[62;63H[K[62;63H419,9[9C87%[16;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m465 
+466 [m[37m[40m[1m    [1m[36m//Declarations[m[37m[40m[1m
+[1m[33m467 [m[37m[40m[1m    string input;[62;63H[K[62;63H419,9[9C88%[13;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m468 [m[37m[40m[1m    vector<string> args;
+[1m[33m469 [m[37m[40m[1m    [1m[32mbool[m[37m[40m[1m comment = [1m[35mfalse[m[37m[40m[1m;
+[1m[33m470 [m[37m[40m[1m[62;63H[K[62;63H419,9[9C89%[10;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m471 [m[37m[40m[1m    [1m[36m//While loop that repeats $ and cin command[m[37m[40m[1m
+[1m[33m472 [m[37m[40m[1m    [1m[33mwhile[m[37m[40m[1m([1m[35mtrue[m[37m[40m[1m){
+[1m[33m473 [m[37m[40m[1m[62;63H[K[62;63H419,9[9C89%[7;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m474 [m[37m[40m[1m[7C [1m[36m//cout << user << "@" << host << " $ ";[m[37m[40m[1m
+[1m[33m475 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(getcwd(cwd,[1m[35mBUFSIZ[m[37m[40m[1m) == [1m[35mNULL[m[37m[40m[1m){
+[1m[33m476 [m[37m[40m[1m[11C perror([1m[35m"getcwd"[m[37m[40m[1m);[62;63H[K[62;63H419,9[9C90%[4;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m477 [m[37m[40m[1m[7C }
+[1m[33m478 [m[37m[40m[1m[7C string home = getenv([1m[35m"HOME"[m[37m[40m[1m);
+[1m[33m479 [m[37m[40m[1m[7C string dir = cwd;[62;63H[K[62;63H422,9[9C91%[4;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m480 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(home == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){
+[1m[33m481 [m[37m[40m[1m[11C perror([1m[35m"getenv"[m[37m[40m[1m);
+[1m[33m482 [m[37m[40m[1m[7C }[62;63H[K[62;63H425,9[9C91%[4;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m483 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(dir.find(home,[1m[35m0[m[37m[40m[1m) != string::npos){
+[1m[33m484 [m[37m[40m[1m[11C dir.replace([1m[35m0[m[37m[40m[1m,home.size(),[1m[35m"~"[m[37m[40m[1m);
+[1m[33m485 [m[37m[40m[1m[7C }[62;63H[K[62;63H428,5[9C92%[4;9H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m486 
+487 [m[37m[40m[1m[7C cout << dir <<[1m[35m" $ "[m[37m[40m[1m;
+[1m[33m488 [m[37m[40m[1m[7C cout.flush();[1m[36m//flush just to be safe[m[37m[40m[1m[62;63H[K[62;63H431,9[9C93%[4;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m489 
+490 [m[37m[40m[1m[7C cin.clear();
+[1m[33m491 [m[37m[40m[1m[7C comment = [1m[35mfalse[m[37m[40m[1m;[62;63H[K[62;63H434,9[9C93%[4;13H[1;61r[1;1H[3M[1;62r[59;1H[1m[33m492 [m[37m[40m[1m[7C getline(cin,input);[1m[36m//get input[m[37m[40m[1m
+[1m[33m493 [m[37m[40m[1m[1m[36m//================Tokenize the input into multiple parts==============[m[37m[40m[1m
+[1m[33m494 [m[37m[40m[1m[7C [1m[36m//separators[m[37m[40m[1m[62;63H[K[62;63H437,4[9C94%[4;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m431 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] pids;
+[1m[33m432 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] pidfd;
+[1m[33m433 [m[37m[40m[1m    [1m[33mdelete[m[37m[40m[1m [] forks;[62;63H[K[62;63H437,4[9C93%[7;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m428 [m[37m[40m[1m    }
+[1m[33m429 
+430 [m[37m[40m[1m    [1m[36m//De-allocate memory[m[37m[40m[1m[62;63H[K[62;63H437,4[9C93%[10;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m425 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m426 [m[37m[40m[1m[7C }
+[1m[33m427 [m[37m[40m[1m[7C cout << [1m[35m"Child PID: "[m[37m[40m[1m<< pid << endl;[62;63H[K[62;63H437,4[9C92%[13;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m422 [m[37m[40m[1m[7C sigignore([1m[35mSIGINT[m[37m[40m[1m);
+[1m[33m423 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m((pid = wait(&status))<[1m[35m0[m[37m[40m[1m){
+[1m[33m424 [m[37m[40m[1m[11C perror([1m[35m"wait"[m[37m[40m[1m);[62;63H[K[62;63H437,4[9C91%[16;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m419 [m[37m[40m[1m    pid_t pid;
+[1m[33m420 [m[37m[40m[1m    [1m[36m//waits for all the child[m[37m[40m[1m
+[1m[33m421 [m[37m[40m[1m    [1m[33mfor[m[37m[40m[1m( [1m[32mint[m[37m[40m[1m w=[1m[35m0[m[37m[40m[1m; w < pipeNum+[1m[35m1[m[37m[40m[1m; ++w) {[62;63H[K[62;63H437,4[9C91%[19;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m416 [m[37m[40m[1m[7C close(pidfd[j]);
+[1m[33m417 [m[37m[40m[1m    }
+[1m[33m418 [m[37m[40m[1m[62;63H[K[62;63H437,4[9C90%[22;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m413 
+414 [m[37m[40m[1m    [1m[33mfor[m[37m[40m[1m([1m[32mint[m[37m[40m[1m j = [1m[35m0[m[37m[40m[1m;j<pipeNum*[1m[35m2[m[37m[40m[1m;++j){
+[1m[33m415 [m[37m[40m[1m[7C cout << [1m[35m"parent closed: "[m[37m[40m[1m << j << endl;[62;63H[K[62;63H437,4[9C89%[25;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m410 [m[37m[40m[1m[11C exit([1m[35m0[m[37m[40m[1m);
+[1m[33m411 [m[37m[40m[1m[7C }
+[1m[33m412 [m[37m[40m[1m    }[62;63H[K[62;63H437,4[9C89%[28;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m407 [m[37m[40m[1m[15C cout << [1m[35m"child closed: "[m[37m[40m[1m << j << endl;
+[1m[33m408 [m[37m[40m[1m[15C close(pidfd[j]);
+[1m[33m409 [m[37m[40m[1m[11C }[62;63H[K[62;63H437,4[9C88%[31;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m404 [m[37m[40m[1m[11C }
+[1m[33m405 [m[37m[40m[1m[11C singleCommand(commands[i]);
+[1m[33m406 [m[37m[40m[1m[11C [1m[33mfor[m[37m[40m[1m([1m[32mint[m[37m[40m[1m j = [1m[35m0[m[37m[40m[1m;j < pipeNum*[1m[35m2[m[37m[40m[1m;++j){[62;63H[K[62;63H437,4[9C87%[34;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m401 [m[37m[40m[1m[15C [1m[33mfor[m[37m[40m[1m([1m[32mint[m[37m[40m[1m j = [1m[35m0[m[37m[40m[1m;j<pipeNum*[1m[35m2[m[37m[40m[1m;++j){
+[1m[33m402 [m[37m[40m[1m[19C close(pidfd[j]);
+[1m[33m403 [m[37m[40m[1m[15C }[62;63H[K[62;63H437,4[9C87%[37;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m398 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m399 [m[37m[40m[1m[15C }
+[1m[33m400 [m[37m[40m[1m[15C singleCommand(commands[i]);[62;63H[K[62;63H437,4[9C86%[40;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m395 [m[37m[40m[1m[15C [1m[36m//Changes cin and cout[m[37m[40m[1m
+[1m[33m396 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(dup2(pidfd[(i-[1m[35m1[m[37m[40m[1m)*[1m[35m2[m[37m[40m[1m + [1m[35m3[m[37m[40m[1m],[1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m397 [m[37m[40m[1m[19C perror([1m[35m"dup2"[m[37m[40m[1m);[62;63H[K[62;63H437,4[9C85%[43;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m392 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m393 [m[37m[40m[1m[15C }
+[1m[33m394 [m[37m[40m[1m[62;63H[K[62;63H437,4[9C85%[46;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m389 [m[37m[40m[1m[15C [1m[36m//Redirect pipes in the mid[m[37m[40m[1m
+[1m[33m390 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(dup2(pidfd[(i-[1m[35m1[m[37m[40m[1m)*[1m[35m2[m[37m[40m[1m],[1m[35m0[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m391 [m[37m[40m[1m[19C perror([1m[35m"dup2"[m[37m[40m[1m);[62;63H[K[62;63H437,4[9C84%[49;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m386 [m[37m[40m[1m[15C [1m[36m// } [m[37m[40m[1m
+[1m[33m387 [m[37m[40m[1m[11C }[1m[33melse[m[37m[40m[1m{[1m[36m//----------------------------------------Other Fork[m[37m[40m[1m
+[1m[33m388 [m[37m[40m[1m[15C [1m[36m//cout << " Fork" << endl;[m[37m[40m[1m[62;63H[K[62;63H437,4[9C83%[52;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m383 [m[37m[40m[1m[15C [1m[36m// singleCommand(commands[i]);[m[37m[40m[1m
+[1m[33m384 [m[37m[40m[1m[15C [1m[36m// for(int j = 0;j<pipeNum*2;++j){[m[37m[40m[1m
+[1m[33m385 [m[37m[40m[1m[15C [1m[36m//     close(pidfd[j]);[m[37m[40m[1m[62;63H[K[62;63H437,4[9C83%[55;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m380 [m[37m[40m[1m[19C perror([1m[35m"dup2"[m[37m[40m[1m);
+[1m[33m381 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m382 [m[37m[40m[1m[15C }[62;63H[K[62;63H437,4[9C82%[58;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m377 [m[37m[40m[1m[15C [1m[36m//cout << "Last Fork" << endl;[m[37m[40m[1m
+[1m[33m378 [m[37m[40m[1m[15C [1m[36m//Redirect cin to last pipe[m[37m[40m[1m
+[1m[33m379 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(dup2(pidfd[(i-[1m[35m1[m[37m[40m[1m)*[1m[35m2[m[37m[40m[1m],[1m[35m0[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){[62;63H[K[62;63H434,9[9C81%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m374 [m[37m[40m[1m[19C }
+[1m[33m375 [m[37m[40m[1m[15C }
+[1m[33m376 [m[37m[40m[1m[11C }[1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m(i==pipeNum){[1m[36m//---------------------Last Fork[m[37m[40m[1m[62;63H[K[62;63H431,9[9C81%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m371 [m[37m[40m[1m[23C [1m[33mif[m[37m[40m[1m(close(pidfd[j])<[1m[35m0[m[37m[40m[1m){
+[1m[33m372 [m[37m[40m[1m[27C perror([1m[35m"close"[m[37m[40m[1m);
+[1m[33m373 [m[37m[40m[1m[23C }[51;43H[46m{[58;9H}[m[37m[40m[1m[62;63H[K[62;63H428,5[9C80%[58;9H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m368 [m[37m[40m[1m[15C [1m[36m//close all the pipes[m[37m[40m[1m
+[1m[33m369 [m[37m[40m[1m[15C [1m[33mfor[m[37m[40m[1m([1m[32mint[m[37m[40m[1m j = [1m[35m0[m[37m[40m[1m;j<pipeNum*[1m[35m2[m[37m[40m[1m;++j){
+[1m[33m370 [m[37m[40m[1m[19C [1m[33mif[m[37m[40m[1m(j != [1m[35m1[m[37m[40m[1m){[54;43H{[61;9H}[62;63H[K[62;63H425,9[9C79%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m365 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m366 [m[37m[40m[1m[15C }
+[1m[33m367 [m[37m[40m[1m[15C singleCommand(commands[i]);[62;63H[K[62;63H422,9[9C79%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m362 [m[37m[40m[1m[15C [1m[36m//Redirect cout to first pipe[m[37m[40m[1m
+[1m[33m363 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(dup2(pidfd[[1m[35m1[m[37m[40m[1m],[1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m364 [m[37m[40m[1m[19C perror([1m[35m"dup2"[m[37m[40m[1m);[62;63H[K[62;63H419,9[9C78%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m359 [m[37m[40m[1m[7C [1m[36m//Where to run runargs();[m[37m[40m[1m
+[1m[33m360 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(i==[1m[35m0[m[37m[40m[1m){[1m[36m//-------------------------------------First [m[37m[40m[1m
+[1m[33m361 [m[37m[40m[1m[15C [1m[36m//cout << "First Fork" << endl;[m[37m[40m[1m[62;63H[K[62;63H416,9[9C77%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m356 [m[37m[40m[1m[11C perror([1m[35m"fork"[m[37m[40m[1m);
+[1m[33m357 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m;
+[1m[33m358 [m[37m[40m[1m[7C } [1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m (forks[i] == [1m[35m0[m[37m[40m[1m) {[62;63H[K[62;63H413,4[9C77%[58;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m353 [m[37m[40m[1m    [1m[33mfor[m[37m[40m[1m( [1m[32mint[m[37m[40m[1m i=[1m[35m0[m[37m[40m[1m; i < pipeNum + [1m[35m1[m[37m[40m[1m; ++i){
+[1m[33m354 [m[37m[40m[1m[7C [1m[36m//cout << "i: " << i << endl;[m[37m[40m[1m
+[1m[33m355 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m ((forks[i] = fork()) < [1m[35m0[m[37m[40m[1m) {[62;63H[K[62;63H410,9[9C76%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m350 [m[37m[40m[1m    [1m[33mfor[m[37m[40m[1m( [1m[32mint[m[37m[40m[1m j=[1m[35m0[m[37m[40m[1m; j < pipeNum; ++j){
+[1m[33m351 [m[37m[40m[1m[7C pipe(pidfd + (j*[1m[35m2[m[37m[40m[1m));
+[1m[33m352 [m[37m[40m[1m    }[62;63H[K[62;63H407,9[9C76%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m347 [m[37m[40m[1m    [1m[32mint[m[37m[40m[1m* pidfd = [1m[33mnew[m[37m[40m[1m [1m[32mint[m[37m[40m[1m[pipeNum*[1m[35m2[m[37m[40m[1m];
+[1m[33m348 
+349 [m[37m[40m[1m    [1m[36m//Set up pipes[m[37m[40m[1m[62;63H[K[62;63H404,9[9C75%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m344 
+345 [m[37m[40m[1m    pid_t* pids = [1m[33mnew[m[37m[40m[1m pid_t[pipeNum];
+[1m[33m346 [m[37m[40m[1m    pid_t* forks = [1m[33mnew[m[37m[40m[1m pid_t[pipeNum+[1m[35m1[m[37m[40m[1m];[62;63H[K[62;63H401,9[9C74%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m341 [m[37m[40m[1m[1m[36m        0,2,4 are reads[m[37m[40m[1m
+[1m[33m342 [m[37m[40m[1m[1m[36m        1,3,5 are writes[][m[37m[40m[1m
+[1m[33m343 [m[37m[40m[1m[1m[36m    */[m[37m[40m[1m[62;63H[K[62;63H398,9[9C74%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m338 
+339 [m[37m[40m[1m    [1m[36m//pids = #of forks[m[37m[40m[1m
+[1m[33m340 [m[37m[40m[1m    [1m[36m/*pidfd[m[37m[40m[1m[62;63H[K[62;63H395,9[9C73%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m335 [m[37m[40m[1m[1m[36m    }else{[m[37m[40m[1m
+[1m[33m336 [m[37m[40m[1m[1m[36m        cout << "Sorry too many Pipes" << endl;[m[37m[40m[1m
+[1m[33m337 [m[37m[40m[1m[1m[36m    }*/[m[37m[40m[1m[62;63H[K[62;63H392,9[9C72%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m332 [m[37m[40m[1m[1m[36m            }[m[37m[40m[1m
+[1m[33m333 [m[37m[40m[1m[1m[36m            return;[m[37m[40m[1m
+[1m[33m334 [m[37m[40m[1m[1m[36m        }[m[37m[40m[1m[62;63H[K[62;63H389,9[9C72%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m329 [m[37m[40m[1m[1m[36m            if(status<0){[m[37m[40m[1m
+[1m[33m330 [m[37m[40m[1m[1m[36m                perror("Wait");[m[37m[40m[1m
+[1m[33m331 [m[37m[40m[1m[1m[36m                exit(1);[m[37m[40m[1m[62;63H[K[62;63H386,9[9C71%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m326 [m[37m[40m[1m[1m[36m            }[m[37m[40m[1m
+[1m[33m327 [m[37m[40m[1m[1m[36m            close(pipefd[1]); [m[37m[40m[1m
+[1m[33m328 [m[37m[40m[1m[1m[36m            wait(&status);[m[37m[40m[1m[62;63H[K[62;63H383,9[9C70%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m323 [m[37m[40m[1m[1m[36m            if(execvp(arguments[0],arguments.data())<0){[m[37m[40m[1m
+[1m[33m324 [m[37m[40m[1m[1m[36m                perror("Executable Parent");[m[37m[40m[1m
+[1m[33m325 [m[37m[40m[1m[1m[36m                exit(1);[m[37m[40m[1m[62;63H[K[62;63H380,9[9C70%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m320 [m[37m[40m[1m[1m[36m                exit(1);[m[37m[40m[1m
+[1m[33m321 [m[37m[40m[1m[1m[36m            }[m[37m[40m[1m
+[1m[33m322 [m[37m[40m[1m[1m[36m            [m[37m[40m[1m[62;63H[K[62;63H377,9[9C69%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m317 [m[37m[40m[1m[1m[36m            [m[37m[40m[1m
+[1m[33m318 [m[37m[40m[1m[1m[36m            if(dup2(pipefd[1],1)<0){[m[37m[40m[1m
+[1m[33m319 [m[37m[40m[1m[1m[36m                perror("dup fd1");[m[37m[40m[1m[62;63H[K[62;63H374,9[9C68%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m314 [m[37m[40m[1m[1m[36m                arguments.push_back(&commands[0][i][0]);[m[37m[40m[1m
+[1m[33m315 [m[37m[40m[1m[1m[36m            }[m[37m[40m[1m
+[1m[33m316 [m[37m[40m[1m[1m[36m            arguments.push_back('\0');[m[37m[40m[1m[62;63H[K[62;63H371,9[9C68%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m311 [m[37m[40m[1m[1m[36m            close(pipefd[0]);[m[37m[40m[1m
+[1m[33m312 [m[37m[40m[1m[1m[36m            vector<char *> arguments;[m[37m[40m[1m
+[1m[33m313 [m[37m[40m[1m[1m[36m            for(size_t i = 0; i < commands[0].size(); ++i){[m[37m[40m[1m[62;63H[K[62;63H368,9[9C67%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m308 [m[37m[40m[1m[1m[36m            }[m[37m[40m[1m
+[1m[33m309 [m[37m[40m[1m[1m[36m            close(pipefd[0]); //Close infile[m[37m[40m[1m
+[1m[33m310 [m[37m[40m[1m[1m[36m        }else{ //Parent runs the other function[m[37m[40m[1m[62;63H[K[62;63H365,9[9C66%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m305 [m[37m[40m[1m[1m[36m            if(execvp(arguments[0],arguments.data())<0){[m[37m[40m[1m
+[1m[33m306 [m[37m[40m[1m[1m[36m                perror("Executable Child");[m[37m[40m[1m
+[1m[33m307 [m[37m[40m[1m[1m[36m                exit(1);[m[37m[40m[1m[62;63H[K[62;63H362,9[9C66%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m302 [m[37m[40m[1m[1m[36m                exit(1);[m[37m[40m[1m
+[1m[33m303 [m[37m[40m[1m[1m[36m            }[m[37m[40m[1m
+[1m[33m304 [m[37m[40m[1m[1m[36m            [m[37m[40m[1m[62;63H[K[62;63H359,9[9C65%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m299 [m[37m[40m[1m[1m[36m            [m[37m[40m[1m
+[1m[33m300 [m[37m[40m[1m[1m[36m            if(dup2(pipefd[0],0)<0){[m[37m[40m[1m
+[1m[33m301 [m[37m[40m[1m[1m[36m                perror("dup fd0");[m[37m[40m[1m[62;63H[K[62;63H356,9[9C64%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m296 [m[37m[40m[1m[1m[36m                arguments.push_back(&commands[1][i][0]);[m[37m[40m[1m
+[1m[33m297 [m[37m[40m[1m[1m[36m            }[m[37m[40m[1m
+[1m[33m298 [m[37m[40m[1m[1m[36m            arguments.push_back('\0');[m[37m[40m[1m[62;63H[K[62;63H353,9[9C64%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m293 [m[37m[40m[1m[1m[36m            close(pipefd[1]); //Close outfile end[m[37m[40m[1m
+[1m[33m294 [m[37m[40m[1m[1m[36m            vector<char *> arguments;[m[37m[40m[1m
+[1m[33m295 [m[37m[40m[1m[1m[36m            for(size_t i = 0; i < commands[1].size(); ++i){[m[37m[40m[1m[62;63H[K[62;63H350,9[9C63%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m290 [m[37m[40m[1m[1m[36m        }[m[37m[40m[1m
+[1m[33m291 [m[37m[40m[1m[1m[36m        pid = fork();[m[37m[40m[1m
+[1m[33m292 [m[37m[40m[1m[1m[36m        if (pid == 0) { //Child Runs the first Function[m[37m[40m[1m[62;63H[K[62;63H347,9[9C62%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m287 [m[37m[40m[1m[1m[36m        if (pipe(pipefd) == -1) {[m[37m[40m[1m
+[1m[33m288 [m[37m[40m[1m[1m[36m            perror("pipe");[m[37m[40m[1m
+[1m[33m289 [m[37m[40m[1m[1m[36m            return;[m[37m[40m[1m[62;63H[K[62;63H344,4[9C62%[58;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m284 [m[37m[40m[1m    [1m[36m/*int pipefd[2];[m[37m[40m[1m
+[1m[33m285 [m[37m[40m[1m[1m[36m    pid_t pid;[m[37m[40m[1m
+[1m[33m286 [m[37m[40m[1m[1m[36m    if(pipeNum == 1){[m[37m[40m[1m[62;63H[K[62;63H341,9[9C61%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m281 [m[37m[40m[1m    }
+[1m[33m282 
+283 [m[37m[40m[1m[1m[36m//========================PIPES============================[m[37m[40m[1m[62;63H[K[62;63H338,4[9C61%[58;8H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m278 [m[37m[40m[1m    [1m[33mif[m[37m[40m[1m(pipeNum == [1m[35m0[m[37m[40m[1m){
+[1m[33m279 [m[37m[40m[1m[7C singleCommand(argList);
+[1m[33m280 [m[37m[40m[1m[7C [1m[33mreturn[m[37m[40m[1m;[62;63H[K[62;63H335,9[9C60%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m275 [m[37m[40m[1m    }
+[1m[33m276 [m[37m[40m[1m    commands.push_back(args);
+[1m[33m277 [m[37m[40m[1m    [1m[36m//For if there is no pipes[m[37m[40m[1m[62;63H[K[62;63H332,9[9C59%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m272 [m[37m[40m[1m[7C }[1m[33melse[m[37m[40m[1m{
+[1m[33m273 [m[37m[40m[1m[11C args.push_back(argList[i]);
+[1m[33m274 [m[37m[40m[1m[7C }[62;63H[K[62;63H329,9[9C59%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m269 [m[37m[40m[1m[11C commands.push_back(args);
+[1m[33m270 [m[37m[40m[1m[11C args.clear();
+[1m[33m271 [m[37m[40m[1m[11C pipeNum++;[62;63H[K[62;63H326,9[9C58%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m266 [m[37m[40m[1m    vector<vector<string> > commands;
+[1m[33m267 [m[37m[40m[1m    [1m[33mfor[m[37m[40m[1m([1m[32munsigned[m[37m[40m[1m [1m[32mint[m[37m[40m[1m i = [1m[35m0[m[37m[40m[1m; i<argList.size();++i){
+[1m[33m268 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(argList[i]==[1m[35m"|"[m[37m[40m[1m){[62;63H[K[62;63H323,9[9C57%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m263 [m[37m[40m[1m[1m[32mvoid[m[37m[40m[1m allCommand(vector<string> argList){
+[1m[33m264 [m[37m[40m[1m    [1m[32mint[m[37m[40m[1m pipeNum = [1m[35m0[m[37m[40m[1m, status;
+[1m[33m265 [m[37m[40m[1m    vector<string> args;[62;63H[K[62;63H320,9[9C57%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m260 
+261 [m[37m[40m[1m[1m[36m//============Main management for the arguments===============[m[37m[40m[1m
+[1m[33m262 [m[37m[40m[1m[1m[36m//+++++++++++++++++++++++++=BROKEN++++++++++++++++++++++++++++++[m[37m[40m[1m[62;63H[K[62;63H317,9[9C56%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m257 [m[37m[40m[1m    }
+[1m[33m258 [m[37m[40m[1m    [1m[33mreturn[m[37m[40m[1m [1m[35mtrue[m[37m[40m[1m;
+[1m[33m259 [m[37m[40m[1m}[62;63H[K[62;63H314,9[9C55%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m254 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m255 [m[37m[40m[1m[11C }
+[1m[33m256 [m[37m[40m[1m[7C }[62;63H[K[62;63H311,9[9C55%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m251 [m[37m[40m[1m[11C }
+[1m[33m252 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(setenv([1m[35m"PWD"[m[37m[40m[1m, newPwd.c_str(), [1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m253 [m[37m[40m[1m[15C perror([1m[35m"setenv"[m[37m[40m[1m);[62;63H[K[62;63H308,9[9C54%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m248 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(setenv([1m[35m"OLDPWD"[m[37m[40m[1m, oldPwd.c_str(), [1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m249 [m[37m[40m[1m[15C perror([1m[35m"setenv"[m[37m[40m[1m);
+[1m[33m250 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;[62;63H[K[62;63H305,9[9C53%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m245 [m[37m[40m[1m[15C perror([1m[35m"chdir"[m[37m[40m[1m);
+[1m[33m246 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m247 [m[37m[40m[1m[11C }[62;63H[K[62;63H302,9[9C53%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m242 [m[37m[40m[1m[11C }
+[1m[33m243 
+244 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(chdir(newPwd.c_str()) < [1m[35m0[m[37m[40m[1m){[62;63H[K[62;63H299,9[9C52%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m239 [m[37m[40m[1m[19C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m240 [m[37m[40m[1m[15C }
+[1m[33m241 [m[37m[40m[1m[15C newPwd.replace([1m[35m0[m[37m[40m[1m,[1m[35m1[m[37m[40m[1m,home);[62;63H[K[62;63H296,9[9C51%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m236 [m[37m[40m[1m[15C string home = getenv([1m[35m"HOME"[m[37m[40m[1m);
+[1m[33m237 [m[37m[40m[1m[15C [1m[33mif[m[37m[40m[1m(home == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){
+[1m[33m238 [m[37m[40m[1m[19C perror([1m[35m"getenv"[m[37m[40m[1m);[62;63H[K[62;63H293,9[9C51%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m233 [m[37m[40m[1m[7C }[1m[33melse[m[37m[40m[1m{
+[1m[33m234 [m[37m[40m[1m[11C [1m[36m//Checks for ~[m[37m[40m[1m
+[1m[33m235 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(newPwd[[1m[35m0[m[37m[40m[1m] == [1m[35m'~'[m[37m[40m[1m){[55;37H[1m[36m[46m{[58;13H}[m[37m[40m[1m[62;63H[K[62;63H290,9[9C50%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m230 [m[37m[40m[1m[7C }[1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m(oldPwd == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){
+[1m[33m231 [m[37m[40m[1m[11C perror([1m[35m"old getenv"[m[37m[40m[1m);
+[1m[33m232 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;[58;37H[1m[36m{[61;13H}[m[37m[40m[1m[62;63H[K[62;63H287,9[9C49%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m227 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(newPwd == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){
+[1m[33m228 [m[37m[40m[1m[11C perror([1m[35m"getenv"[m[37m[40m[1m);
+[1m[33m229 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;[62;63H[K[62;63H284,9[9C49%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m224 [m[37m[40m[1m[7C oldPwd = getenv([1m[35m"PWD"[m[37m[40m[1m);
+[1m[33m225 [m[37m[40m[1m[7C newPwd = args[[1m[35m1[m[37m[40m[1m];
+[1m[33m226 [m[37m[40m[1m[55;25H[46m{[58;9H}[m[37m[40m[1m[62;63H[K[62;63H281,5[9C48%[58;9H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m221 [m[37m[40m[1m[7C }
+[1m[33m222 [m[37m[40m[1m    [1m[36m//Changes to the path[m[37m[40m[1m
+[1m[33m223 [m[37m[40m[1m    }[1m[33melse[m[37m[40m[1m{[58;25H{[61;9H}[62;63H[K[62;63H278,9[9C47%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m218 [m[37m[40m[1m[15C perror([1m[35m"setenv"[m[37m[40m[1m);
+[1m[33m219 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m220 [m[37m[40m[1m[11C }[50;54H[46m{[58;9H}[m[37m[40m[1m[62;63H[K[62;63H275,5[9C47%[58;9H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m215 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m216 [m[37m[40m[1m[11C }
+[1m[33m217 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(setenv([1m[35m"PWD"[m[37m[40m[1m, newPwd.c_str(), [1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){[53;54H{[54;32H[46m{[58;13H}[m[37m[40m[1m[61;9H}[62;63H[K[62;63H272,9[9C46%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m212 [m[37m[40m[1m[11C }
+[1m[33m213 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(setenv([1m[35m"OLDPWD"[m[37m[40m[1m, oldPwd.c_str(), [1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m214 [m[37m[40m[1m[15C perror([1m[35m"setenv"[m[37m[40m[1m);[57;32H{[61;13H}[62;63H[K[62;63H269,9[9C45%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m209 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(chdir(newPwd.c_str()) < [1m[35m0[m[37m[40m[1m){
+[1m[33m210 [m[37m[40m[1m[15C perror([1m[35m"chdir"[m[37m[40m[1m);
+[1m[33m211 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;[62;63H[K[62;63H266,9[9C45%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m206 [m[37m[40m[1m[11C perror([1m[35m"old getenv"[m[37m[40m[1m);
+[1m[33m207 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m208 [m[37m[40m[1m[7C }[1m[33melse[m[37m[40m[1m{[62;63H[K[62;63H263,9[9C44%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m203 [m[37m[40m[1m[11C perror([1m[35m"getenv"[m[37m[40m[1m);
+[1m[33m204 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m205 [m[37m[40m[1m[7C }[1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m(oldPwd == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){[62;63H[K[62;63H260,0-1[7C44%[58;5H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m200 [m[37m[40m[1m[7C newPwd = getenv([1m[35m"OLDPWD"[m[37m[40m[1m);
+[1m[33m201 [m[37m[40m[1m[7C oldPwd = getenv([1m[35m"PWD"[m[37m[40m[1m);
+[1m[33m202 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(newPwd == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){[24;14H[46m{[58;9H}[m[37m[40m[1m[62;63H[K[62;63H257,5[9C43%[58;9H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m197 [m[37m[40m[1m[7C }
+[1m[33m198 [m[37m[40m[1m    [1m[36m//Changes to preivous directory[m[37m[40m[1m
+[1m[33m199 [m[37m[40m[1m    }[1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m(args[[1m[35m1[m[37m[40m[1m] == [1m[35m"-"[m[37m[40m[1m){[27;14H{[61;9H}[62;63H[K[62;63H254,9[9C42%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m194 [m[37m[40m[1m[15C perror([1m[35m"setenv"[m[37m[40m[1m);
+[1m[33m195 [m[37m[40m[1m[14C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m196 [m[37m[40m[1m[11C }[62;63H[K[62;63H251,9[9C42%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m191 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m192 [m[37m[40m[1m[11C }
+[1m[33m193 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(setenv([1m[35m"PWD"[m[37m[40m[1m, newPwd.c_str(), [1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){[62;63H[K[62;63H248,9[9C41%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m188 [m[37m[40m[1m[11C }
+[1m[33m189 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(setenv([1m[35m"OLDPWD"[m[37m[40m[1m, oldPwd.c_str(), [1m[35m1[m[37m[40m[1m)<[1m[35m0[m[37m[40m[1m){
+[1m[33m190 [m[37m[40m[1m[15C perror([1m[35m"setenv"[m[37m[40m[1m);[62;63H[K[62;63H245,9[9C40%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m185 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(oldPwd == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){
+[1m[33m186 [m[37m[40m[1m[15C perror([1m[35m"old getenv"[m[37m[40m[1m);
+[1m[33m187 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;[62;63H[K[62;63H242,9[9C40%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m182 [m[37m[40m[1m[15C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;
+[1m[33m183 [m[37m[40m[1m[11C }
+[1m[33m184 [m[37m[40m[1m[11C oldPwd = getenv([1m[35m"PWD"[m[37m[40m[1m);[62;63H[K[62;63H239,9[9C39%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m179 [m[37m[40m[1m[7C }[1m[33melse[m[37m[40m[1m{
+[1m[33m180 [m[37m[40m[1m[11C [1m[33mif[m[37m[40m[1m(chdir(newPwd.c_str()) < [1m[35m0[m[37m[40m[1m){
+[1m[33m181 [m[37m[40m[1m[15C perror([1m[35m"chdir"[m[37m[40m[1m);[62;63H[K[62;63H236,9[9C38%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m176 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(newPwd == [1m[35m"[m[37m[40m[1m[1m[31m\0[m[37m[40m[1m[1m[35m"[m[37m[40m[1m){
+[1m[33m177 [m[37m[40m[1m[11C perror([1m[35m"getenv"[m[37m[40m[1m);
+[1m[33m178 [m[37m[40m[1m[11C [1m[33mreturn[m[37m[40m[1m [1m[35mfalse[m[37m[40m[1m;[55;37H[46m{[58;13H}[m[37m[40m[1m[62;63H[K[62;63H233,9[9C38%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m173 [m[37m[40m[1m    [1m[36m//Changes current directory to home[m[37m[40m[1m
+[1m[33m174 [m[37m[40m[1m    [1m[33mif[m[37m[40m[1m(args.size()==[1m[35m1[m[37m[40m[1m){
+[1m[33m175 [m[37m[40m[1m[7C newPwd = getenv([1m[35m"HOME"[m[37m[40m[1m);[55;31H[46m{[58;13H}[m[37m[40m[1m[23C{[61;13H}[62;63H[K[62;63H230,9[9C37%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m170 
+171 [m[37m[40m[1m[1m[32mbool[m[37m[40m[1m comCD(vector<string> args){
+[1m[33m172 [m[37m[40m[1m    string oldPwd, newPwd;[58;31H{[61;13H}[62;63H[K[62;63H227,9[9C36%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m167 [m[37m[40m[1m[7C }
+[1m[33m168 [m[37m[40m[1m    }
+[1m[33m169 [m[37m[40m[1m}[62;63H[K[62;63H224,9[9C36%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m164 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m (wpid == -[1m[35m1[m[37m[40m[1m)
+[1m[33m165 [m[37m[40m[1m[7C {
+[1m[33m166 [m[37m[40m[1m[11C perror([1m[35m"wait error"[m[37m[40m[1m);[45;18H[46m{[58;13H}[m[37m[40m[1m[62;63H[K[62;63H221,9[9C35%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m161 [m[37m[40m[1m[11C wpid = waitpid(pid, &status, WUNTRACED);
+[1m[33m162 [m[37m[40m[1m[7C }
+[1m[33m163 [m[37m[40m[1m[7C [1m[33mwhile[m[37m[40m[1m (wpid == -[1m[35m1[m[37m[40m[1m && errno == [1m[35mEINTR[m[37m[40m[1m);[48;18H{[61;13H}[62;63H[K[62;63H218,9[9C34%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m158 [m[37m[40m[1m[7C [1m[32mint[m[37m[40m[1m wpid;
+[1m[33m159 [m[37m[40m[1m[7C [1m[33mdo
+160 [m[37m[40m[1m[7C {[62;63H[K[62;63H215,9[9C34%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m155 [m[37m[40m[1m[11C exit([1m[35m1[m[37m[40m[1m);
+[1m[33m156 [m[37m[40m[1m[7C }
+[1m[33m157 [m[37m[40m[1m    }[1m[33melse[m[37m[40m[1m [1m[33mif[m[37m[40m[1m (pid > [1m[35m0[m[37m[40m[1m) {[1m[36m//Parent[m[37m[40m[1m[62;63H[K[62;63H212,9[9C33%[58;13H[1;61r[1;1H[3L[1;62r[1;1H[1m[33m152 [m[37m[40m[1m[7C arguments.push_back([1m[31m'\0'[m[37m[40m[1m);
+[1m[33m153 [m[37m[40m[1m[7C [1m[33mif[m[37m[40m[1m(execvp(arg
