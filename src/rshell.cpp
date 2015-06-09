@@ -49,7 +49,10 @@ bool properInput(vector<string> argList){
             }
         }else if(argList[i] == "|"){
             if(i+1>=argList.size()){
-                cerr<< "||: expect input file" << endl;
+                cerr<< "|: expect pipe output" << endl;
+                return false;
+            }else if(i==0){
+                cerr<< "|: expect pipe input" << endl;
                 return false;
             }
         }
@@ -100,34 +103,78 @@ bool singleCommand(vector<string> argList){
     }else if (pid == 0){
         for(unsigned int i = 0; i<argList.size();++i){
             if(argList[i] == ">"){
-                ++i;
-                if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_TRUNC, 
-                    S_IRUSR | S_IWUSR))<0){
-                    perror("open fd0");
-                    exit(1);
-                }
-                if(dup2(fd1,1)<0){
-                    perror("dup fd0");
-                    exit(1);
-                }
-                if(close(fd1)<0){
-                    perror("close fd0");
-                    exit(1);
+                if(isdigit(argList[i-1][0])){
+                    ++i;
+                    if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_TRUNC, 
+                        S_IRUSR | S_IWUSR))<0){
+                        perror("open fd0");
+                        exit(1);
+                    }
+                    int t = atoi(argList[i-2].c_str());
+                    argList.erase(argList.begin()+i-2);
+                    --i;
+                    singleArg.pop_back();
+                    if(dup2(fd1,t)<0){
+                        perror("dup fd0");
+                        exit(1);
+                    }
+                    if(close(fd1)<0){
+                        perror("close fd0");
+                        exit(1);
+                    }
+
+                }else{
+                    ++i;
+                    if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_TRUNC, 
+                        S_IRUSR | S_IWUSR))<0){
+                        perror("open fd0");
+                        exit(1);
+                    }
+                    if(dup2(fd1,1)<0){
+                        perror("dup fd0");
+                        exit(1);
+                    }
+                    if(close(fd1)<0){
+                        perror("close fd0");
+                        exit(1);
+                    }
                 }
             }else if(argList[i] == ">>"){
-                ++i;
-                if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_APPEND, 
-                    S_IRUSR | S_IWUSR))<0){
-                    perror("open fd0");
-                    exit(1);
-                }
-                if(dup2(fd1,1)<0){
-                    perror("dup fd0");
-                    exit(1);
-                }
-                if(close(fd1)<0){
-                    perror("close fd0");
-                    exit(1);
+                if(isdigit(argList[i-1][0])){
+                    ++i;
+                    if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_TRUNC, 
+                        S_IRUSR | S_IWUSR))<0){
+                        perror("open fd0");
+                        exit(1);
+                    }
+                    int t = atoi(argList[i-2].c_str());
+                    argList.erase(argList.begin()+i-2);
+                    --i;
+                    singleArg.pop_back();
+                    if(dup2(fd1,t)<0){
+                        perror("dup fd0");
+                        exit(1);
+                    }
+                    if(close(fd1)<0){
+                        perror("close fd0");
+                        exit(1);
+                    }
+
+                }else{
+                    ++i;
+                    if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_APPEND, 
+                        S_IRUSR | S_IWUSR))<0){
+                        perror("open fd0");
+                        exit(1);
+                    }
+                    if(dup2(fd1,1)<0){
+                        perror("dup fd0");
+                        exit(1);
+                    }
+                    if(close(fd1)<0){
+                        perror("close fd0");
+                        exit(1);
+                    }
                 }
             }else if(argList[i] == "<"){
                 ++i;
@@ -152,23 +199,21 @@ bool singleCommand(vector<string> argList){
             arguments.push_back(&singleArg[i][0]);
         }
         arguments.push_back('\0');
+        //cerr << "Single Command: " << singleArg[0] << endl;
         if(execvp(arguments[0],arguments.data())<0){
-            perror("Executable");
+            perror("execvp");
             exit(1);
         }
+        exit(1);
     }else if (pid > 0) {//Parent
-        int wpid;
-        do
-        {
-            wpid = waitpid(pid, &status, WUNTRACED);
+        //cerr << "Waiting: " << argList[0] << endl;
+        if(waitpid(pid,&status,0)<0){
+            perror("wait");
+            return false;
         }
-        while (wpid == -1 && errno == EINTR);
-        if (wpid == -1)
-        {
-            perror("wait error");
-        }
+        //cerr<<"Finished: "<< argList[0] << endl;
     }
-    return status;
+        return status;
 }
 
 //This is for handeling CD
@@ -262,21 +307,27 @@ bool comCD(vector<string> args){
     return true;
 }
 
-bool pipeCommand(vector<vector<string> >commands){
+
+bool pipeCommand(vector<vector<string> >commands,int mainPid,unsigned int forkNum){
+    //cerr << "PipeCommand: " << forkNum << endl;
+    int fd0,fd1;
     if(commands.size()==1){
-        singleCommand(commands[0]);
+        //cerr<<"======END OF RECURSION======" << endl;
+        return singleCommand(commands[0]);
     }
-    vector<string> cur = commands[0];
-    commands.erase(args[0]);
+    vector<string> argList = commands[0];
+    vector<string> singleArg;
+    commands.erase(commands.begin());
     //=========================PIPES================================
-    int* pipes = new int[2];
+    int pipes[2];
     if(pipe(pipes)<0){
         perror("pipe");
         return false;
     }
     int pid = fork();
     if(pid==0){
-        if(close(pipes[1]<0)){
+        //cerr << "Input Redirected" << endl;
+        if(close(pipes[1])<0){
             perror("close 1");
             return false;
         }
@@ -284,15 +335,103 @@ bool pipeCommand(vector<vector<string> >commands){
             perror("dup2");
             return false;
         }
-        if(close(pipes[0]<0)){
+        if(close(pipes[0])<0){
             perror("close 0");
             return false;
         }
-        pipeCommand(commands);
+        //cerr << "Running Child pid: " << getpid() << endl;
+        pipeCommand(commands,mainPid, ++forkNum);
     }else if(pid>0){
+        //cerr << "Running Parent pid: " << getpid() << endl;
+        if(close(pipes[0])<0){
+            perror("close 0");
+            return false;
+        }
+        if(dup2(pipes[1],1)<0){
+            perror("dup2");
+            return false;
+        }
+        if(close(pipes[1])<0){
+            perror("close 0");
+            return false;
+        }
+        //cerr << "Output Redirected" << endl;
+        for(unsigned int i = 0; i<argList.size();++i){
+            if(argList[i] == ">"){
+                ++i;
+                if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_TRUNC, 
+                    S_IRUSR | S_IWUSR))<0){
+                    perror("open fd0");
+                    return false;
+                }
+                if(dup2(fd1,1)<0){
+                    perror("dup fd0");
+                    return false;
+                }
+                if(close(fd1)<0){
+                    perror("close fd0");
+                    return false;
+                }
+            }else if(argList[i] == ">>"){
+                ++i;
+                if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_APPEND, 
+                    S_IRUSR | S_IWUSR))<0){
+                    perror("open fd0");
+                    return false;
+                }
+                if(dup2(fd1,1)<0){
+                    perror("dup fd0");
+                    return false;
+                }
+                if(close(fd1)<0){
+                    perror("close fd0");
+                    return false;
+                }
+            }else if(argList[i] == "<"){
+                ++i;
+                if((fd0=open(argList[i].c_str(),O_RDONLY))<0){
+                    perror("open fd1");
+                    return false;
+                }
+                if(dup2(fd0,0)<0){
+                    perror("dup fd1");
+                    return false;
+                }
+                if(close(fd0)<0){
+                    perror("close fd1");
+                    return false;
+                }
+            }else{
+                singleArg.push_back(argList[i]);
+            }
+        }
         
-
-    return true;
+        if(getpid()==mainPid){
+            //cerr << "Running Last Arg: " << argList[0]<< endl;
+            int status;
+            //singleCommand(argList);
+            for(unsigned int k =0; k<forkNum;++k){
+                if(waitpid(pid,& status,0)<0){
+                    perror("wait");
+                    return false;
+                }
+            }
+        }else{
+            vector<char *> arguments;
+            for(size_t i = 0; i < singleArg.size(); ++i){
+                arguments.push_back(&singleArg[i][0]);
+            }
+            //cerr << "This pid: "<<getpid() << "\nmain: " << mainPid << endl;
+            arguments.push_back('\0');
+            //cerr<< "Running Some Args: " << arguments[0] << endl;
+            if(execvp(arguments[0],arguments.data())<0){
+                perror("execvp");
+                return false;
+            }
+        }
+    }
+    
+    return false;
 }
 
 //============Main management for the arguments===============
@@ -311,15 +450,20 @@ bool allCommand(vector<string> argList){
         }
     }
     commands.push_back(args);
-    //For if there is no pipes, currently working
+    //Debug purpose
+    /*for(unsigned int i = 0; i<commands.size();++i){
+        cout << "Command "<< i << endl;
+        for(unsigned int j=0; j<commands[i].size();++j){
+            cout<< commands[i][j];
+        }
+        cout << endl;
+    }*/
     if(pipeNum == 0){
         return singleCommand(argList);
         
     }else{
-        return pipeCommand(commands);
+        status = pipeCommand(commands,getpid(),0);
     }
-    for(int i = 0; i<pipeNum; ++i){
-        waitpid(-1,&status,0);
     return status;
 }
 
@@ -339,18 +483,6 @@ int main(int argc,char **argv){
         user = getlogin();
     }else{
         perror("Cannot get User Name");
-    }
-
-    struct sigaction newAction, oldAction;
-    newAction.sa_handler = sigHandler;
-    sigemptyset(&newAction.sa_mask);
-    newAction.sa_flags = 0;
-    
-    //For handeling ^C and such
-    if(oldAction.sa_handler != SIG_IGN){
-        if(sigaction(SIGINT, &newAction, &oldAction )< 0){
-            perror("sigaction");
-        }
     }
     
     //Declarations
@@ -401,25 +533,25 @@ int main(int argc,char **argv){
         if(properInput(args)){
             for(unsigned int i=0 ; i<args.size();++i){
                 if(args[i]==";"){
-                    singleCommand(tempArgs);
+                    allCommand(tempArgs);
                     tempArgs.clear();
                 }else if(args[i]!="&&" && args[i]!="||"){
                     tempArgs.push_back(args[i]);
                 }else if(args[i]=="||"){
-                    if(!singleCommand(tempArgs)){
+                    if(!allCommand(tempArgs)){
                         tempArgs.clear();
                         break; 
                     }
                     tempArgs.clear();
                 }else if(args[i]=="&&"){ 
-                    if(singleCommand(tempArgs)){
+                    if(allCommand(tempArgs)){
                         tempArgs.clear();
                         break;
                     }
                     tempArgs.clear();
                 }
             }
-            singleCommand(tempArgs);
+            allCommand(tempArgs);
             tempArgs.clear();
         }
         args.clear();
