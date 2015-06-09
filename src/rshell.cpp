@@ -23,7 +23,7 @@ void sigHandler(int sig){
         cout << endl;
     }
 }
-
+int stin, stout;
 //checks if proper files are there for input output
 bool properInput(vector<string> argList){
     for(unsigned int i = 0; i<argList.size();++i){
@@ -142,7 +142,7 @@ bool singleCommand(vector<string> argList){
             }else if(argList[i] == ">>"){
                 if(isdigit(argList[i-1][0])){
                     ++i;
-                    if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_TRUNC, 
+                    if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_APPEND, 
                         S_IRUSR | S_IWUSR))<0){
                         perror("open fd0");
                         exit(1);
@@ -314,119 +314,127 @@ bool pipeCommand(vector<vector<string> >commands,int mainPid,unsigned int forkNu
     if(commands.size()==1){
         //cerr<<"======END OF RECURSION======" << endl;
         return singleCommand(commands[0]);
-    }
-    vector<string> argList = commands[0];
-    vector<string> singleArg;
-    commands.erase(commands.begin());
-    //=========================PIPES================================
-    int pipes[2];
-    if(pipe(pipes)<0){
-        perror("pipe");
-        return false;
-    }
-    int pid = fork();
-    if(pid==0){
-        //cerr << "Input Redirected" << endl;
-        if(close(pipes[1])<0){
-            perror("close 1");
+    }else{
+        vector<string> argList = commands[0];
+        vector<string> singleArg;
+        commands.erase(commands.begin());
+        //=========================PIPES================================
+        int pipes[2];
+        if(pipe(pipes)<0){
+            perror("pipe");
             return false;
         }
-        if(dup2(pipes[0],0)<0){
-            perror("dup2");
-            return false;
-        }
-        if(close(pipes[0])<0){
-            perror("close 0");
-            return false;
-        }
-        //cerr << "Running Child pid: " << getpid() << endl;
-        pipeCommand(commands,mainPid, ++forkNum);
-    }else if(pid>0){
-        //cerr << "Running Parent pid: " << getpid() << endl;
-        if(close(pipes[0])<0){
-            perror("close 0");
-            return false;
-        }
-        if(dup2(pipes[1],1)<0){
-            perror("dup2");
-            return false;
-        }
-        if(close(pipes[1])<0){
-            perror("close 0");
-            return false;
-        }
-        //cerr << "Output Redirected" << endl;
-        for(unsigned int i = 0; i<argList.size();++i){
-            if(argList[i] == ">"){
-                ++i;
-                if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_TRUNC, 
-                    S_IRUSR | S_IWUSR))<0){
-                    perror("open fd0");
-                    return false;
-                }
-                if(dup2(fd1,1)<0){
-                    perror("dup fd0");
-                    return false;
-                }
-                if(close(fd1)<0){
-                    perror("close fd0");
-                    return false;
-                }
-            }else if(argList[i] == ">>"){
-                ++i;
-                if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_APPEND, 
-                    S_IRUSR | S_IWUSR))<0){
-                    perror("open fd0");
-                    return false;
-                }
-                if(dup2(fd1,1)<0){
-                    perror("dup fd0");
-                    return false;
-                }
-                if(close(fd1)<0){
-                    perror("close fd0");
-                    return false;
-                }
-            }else if(argList[i] == "<"){
-                ++i;
-                if((fd0=open(argList[i].c_str(),O_RDONLY))<0){
-                    perror("open fd1");
-                    return false;
-                }
-                if(dup2(fd0,0)<0){
-                    perror("dup fd1");
-                    return false;
-                }
-                if(close(fd0)<0){
-                    perror("close fd1");
-                    return false;
-                }
-            }else{
-                singleArg.push_back(argList[i]);
+        int pid = fork();
+        if(pid==0){
+            //cerr << "Input Redirected" << endl;
+            if(close(pipes[1])<0){
+                perror("close 1");
+                return false;
             }
-        }
-        
-        if(getpid()==mainPid){
-            //cerr << "Running Last Arg: " << argList[0]<< endl;
-            int status;
-            //singleCommand(argList);
-            for(unsigned int k =0; k<forkNum;++k){
-                if(waitpid(pid,& status,0)<0){
+            if(dup2(pipes[0],0)<0){
+                perror("dup2");
+                return false;
+            }
+            if(close(pipes[0])<0){
+                perror("close 0");
+                return false;
+            }
+            //cerr << "Running Child pid: " << getpid() << endl;
+            pipeCommand(commands,mainPid, ++forkNum);
+        }else if(pid>0){
+            //cerr << "Running Parent pid: " << getpid() << endl;
+            if(close(pipes[0])<0){
+                perror("close 0");
+                return false;
+            }
+            if(dup2(pipes[1],1)<0){
+                perror("dup2");
+                return false;
+            }
+            if(close(pipes[1])<0){
+                perror("close 0");
+                return false;
+            }
+            //cerr << "Output Redirected" << endl;
+            for(unsigned int i = 0; i<argList.size();++i){
+                if(argList[i] == ">"){
+                    ++i;
+                    if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_TRUNC, 
+                        S_IRUSR | S_IWUSR))<0){
+                        perror("open fd0");
+                        return false;
+                    }
+                    if(dup2(fd1,1)<0){
+                        perror("dup fd0");
+                        return false;
+                    }
+                    if(close(fd1)<0){
+                        perror("close fd0");
+                        return false;
+                    }
+                }else if(argList[i] == ">>"){
+                    ++i;
+                    if((fd1=open(argList[i].c_str(),O_WRONLY | O_CREAT | O_APPEND, 
+                        S_IRUSR | S_IWUSR))<0){
+                        perror("open fd0");
+                        return false;
+                    }
+                    if(dup2(fd1,1)<0){
+                        perror("dup fd0");
+                        return false;
+                    }
+                    if(close(fd1)<0){
+                        perror("close fd0");
+                        return false;
+                    }
+                }else if(argList[i] == "<"){
+                    ++i;
+                    if((fd0=open(argList[i].c_str(),O_RDONLY))<0){
+                        perror("open fd1");
+                        return false;
+                    }
+                    if(dup2(fd0,0)<0){
+                        perror("dup fd1");
+                        return false;
+                    }
+                    if(close(fd0)<0){
+                        perror("close fd1");
+                        return false;
+                    }
+                }else{
+                    singleArg.push_back(argList[i]);
+                }
+            }
+            
+            if(getpid()==mainPid){
+                //cerr << "Running Last Arg: " << argList[0]<< endl;
+                int status;
+                singleCommand(argList);
+                if(close(0)<0){
+                    perror("close");
+                    return false;
+                }
+                if(close(1)<0){
+                    perror("close");
+                    return false;
+                }
+                if(wait(&status)<0){
                     perror("wait");
                     return false;
                 }
-            }
-        }else{
-            vector<char *> arguments;
-            for(size_t i = 0; i < singleArg.size(); ++i){
-                arguments.push_back(&singleArg[i][0]);
-            }
-            //cerr << "This pid: "<<getpid() << "\nmain: " << mainPid << endl;
-            arguments.push_back('\0');
-            //cerr<< "Running Some Args: " << arguments[0] << endl;
-            if(execvp(arguments[0],arguments.data())<0){
-                perror("execvp");
-                return false;
+
+            }else{
+                vector<char *> arguments;
+                for(size_t i = 0; i < singleArg.size(); ++i){
+                    arguments.push_back(&singleArg[i][0]);
+                }
+                //cerr << "This pid: "<<getpid() << "\nmain: " << mainPid << endl;
+                arguments.push_back('\0');
+                //cerr<< "Running Some Args: " << arguments[0] << endl;
+                if(execvp(arguments[0],arguments.data())<0){
+                    perror("execvp");
+                    return false;
+                }
             }
         }
     }
@@ -463,12 +471,22 @@ bool allCommand(vector<string> argList){
         
     }else{
         status = pipeCommand(commands,getpid(),0);
+        if(dup2(stin,0)<0){
+            perror("dup2");
+            return false;
+        }
+        if(dup2(stout,1)<0){
+            perror("dup2");
+            return false;
+        }
     }
     return status;
 }
 
 //=========================MAIN FUNCTION=======================
 int main(int argc,char **argv){
+    stin = dup(STDIN_FILENO);
+    stout = dup(STDOUT_FILENO);
     string home = getenv("HOME");
     string dir;
     //char cwd[BUFSIZ];
