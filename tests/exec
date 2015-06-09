@@ -1,0 +1,71 @@
+Script started on Tue 09 Jun 2015 06:50:33 AM PDT
+~
+dding002@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * checksyscalls.sh      is your cpp file doing proper error checking?     |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd cs100/assignment/assignment0/
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m ((hw0)) [0;36m$[0m make
+if [ ! -d bin ]; then mkdir bin; fi
+g++ -std=c++11 -ansi -pedantic -Wall -Werror -g ./src/rshell.cpp \
+	-o bin/rshell
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m ((hw0)) [0;36m$[0m bin/rshell
+dding002@hammer.cs.ucr.edu$ ls #regular comment work ks
+bin  LICENSE.md  makefile  README.md  src  tests
+dding002@hammer.cs.ucr.edu$ # ls -a #pass im param       n parameters
+.  ..  bin  .git  LICENSE.md  makefile	README.md  .rshell.cpp.swp  src  tests
+dding002@hammer.cs.ucr.edu$ ls -   -a; echo hello ;  ; echo this too #; works
+.  ..  bin  .git  LICENSE.md  makefile	README.md  .rshell.cpp.swp  src  tests
+hello
+this too
+dding002@hammer.cs.ucr.edu$   e ls  hi || ls    #this works
+Executable: No such file or directory
+bin  LICENSE.md  makefile  README.md  src  tests
+dding002@hammer.cs.ucr.edu$ ^[[A^[[D        ls && echo hello #this works
+bin  LICENSE.md  makefile  README.md  src  tests
+hello
+dding002@hammer.cs.ucr.edu$ || #set     n Needs in  out   second command to run
+||: expect input file
+dding002@hammer.cs.ucr.edu$ && #same with this
+dding002@hammer.cs.ucr.edu$ || def   ls #default state is false
+bin  LICENSE.md  makefile  README.md  src  tests
+dding002@hammer.cs.ucr.edu$ && ls
+dding002@hammer.cs.ucr.edu$ ls -a; echo hello && mkdir test || echo hello     world  ; git status
+.  ..  bin  .git  LICENSE.md  makefile	README.md  .rshell.cpp.swp  src  tests
+hello
+dding002@hammer.cs.ucr.edu$ ls
+bin  LICENSE.md  makefile  README.md  src  test  tests
+dding002@hammer.cs.ucr.edu$ what ever I put exit # it will exit
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m ((hw0)) [0;36m$[0m bin rshell
+bash: bin: command not found
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m ((hw0)) [0;36m$[0m bin rshell[1Prshell/rshell
+dding002@hammer.cs.ucr.edu$ ls ||&&  can run       echo hello# can run
+bin  LICENSE.md  makefile  README.md  src  test  tests
+dding002@hammer.cs.ucr.edu$ echo spaces&&&&  echo don't matter# ^[[D     r
+spaces
+don't matter
+dding002@hammer.cs.ucr.edu$ exit
+[s%%%%%%%%%%[u[0;32mdding002[0;36m@[0;32mcs100[0;36m:[0;32m~/cs100/assignment/assignment0[0;95m ((hw0)) [0;36m$[0m exit #end of test[K[K[K[Kscript
+exit
+~
+dding002@hammer $ exit
+exit
+
+Script done on Tue 09 Jun 2015 06:56:09 AM PDT
