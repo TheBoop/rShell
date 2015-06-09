@@ -13,12 +13,17 @@ Simple shell designed for unix. Includes only basic functions such as:
 * ls
 * echo
 * mkdir
+* file redirection works
+* file discriptor such as 2> redirects works
+* | are broken (see: Bugs and Limitations)
 
 Also connectors such as:
 * ||
 * && 
 * ;
 and supports functions.
+
+The original state of the shell is false.
 
 ## cd
 ###Description
@@ -46,6 +51,8 @@ ls
 * When passing in multiple paths display file is not seperated
 
 rShell
+* Pipes create zombie shell processes that can cause a infinite loop
+* Takes each input literally
 * Throws errors when not given a proper executable
 * Throws errors when not given proper arguments
 * Throws errors when given odd number of | and &
